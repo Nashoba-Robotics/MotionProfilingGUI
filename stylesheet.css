@@ -1,0 +1,9 @@
+#tester {
+	background-color: "red";
+	width:600px;
+	height:250px;
+}
+p {
+	background-color: "red";
+	font-color: "red";
+}
