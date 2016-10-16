@@ -2,17 +2,32 @@
 <html>
 	<head>
 		<title>Motion Profiling GUI</title>
-		<link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
-		<link href="stylesheet.css" rel="stylesheet" media="screen">
+		<link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="stylesheet.css" rel="stylesheet">
 	</head>
 	<body>
 		<div class="jumbotron text-center">
-		  <h1>My First Bootstrap Page</h1>
-		  <p>Resize this responsive page to see the effect!</p> 
+		  <h1>Nashoba Robotics</h1>
+		  <p>Motion Profiling GUI</p> 
 		</div>
-		<div id="tester"></div>
-		<p>test paragraph</p>
 
+		<nav class="navbar-fixed-top navbar">
+		    <div class="navbar-header navbar-inverse">
+		      <span data-toggle="collapse" data-target="#navBar" class="navbar-brand glyphicon glyphicon-menu-hamburger"></span>
+		    </div>
+		    <ul class="navbar-inverse nav navbar-nav collapse" id="navBar">
+		    	<li><a href="#Graphs">Graphs<span class="caret"></span></a></li>
+				<li><a href="#Layout">Layout<span class="caret"></span></a></li>
+				<li><a href="#Input">Input<span class="caret"></span></a></li>
+			</ul>
+		</nav>
+
+		<div class="row">
+			<div id="tester"></div>
+		</div>
+
+		<script src="jquery-3.1.1.min.js"></script>
+		<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 		<script src="plotly-latest.min.js"></script>
 		<script src="javaScript.js"></script>
 	</body>
