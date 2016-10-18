@@ -19,7 +19,10 @@ li a {
 }
 
 #tester {
-	height: 200px;
-	padding-top: 20px;
-	width: 50%;
+	height: 300px;
+	width: 100%;
+}
+
+#TopRow {
+    height: 300px;
 }
