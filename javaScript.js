@@ -29,6 +29,7 @@ function addGraph() {
 		var dlte = document.createElement('button');
 		var hide = document.createElement('button');
 		var show = document.createElement('button');
+		
 		//Function for delete button
 		dlte.innerHTML = 'Delete Graph';
 		dlte.onclick = function() {
@@ -45,18 +46,17 @@ function addGraph() {
 		//Function for show graph
 		show.innerHTML = 'Show graph';
 		show.onclick = function() {
-			hide.style.display = 'block';
-			graphDiv.style.display = 'block';
+			graphDiv.style.display = 'inline';
+			hide.style.display = 'inline';
 		}
 		//add buttons to graph div
 		div.appendChild(dlte);
-		div.appendChild(hide);
 		div.appendChild(show);
+		div.appendChild(hide);
 	};
 	var form = document.createElement('div');
 	form.appendChild(input);
 	form.appendChild(button);
 	document.getElementById('graphContainer').appendChild(form);
-
 	
 }
