@@ -41,6 +41,7 @@ function addGraph() {
 		hide.onclick = function() {
 			hide.style.display = 'none';
 			graphDiv.style.display = 'none';
+			show.style.display = 'inline';
 		}
 		
 		//Function for show graph
@@ -48,11 +49,14 @@ function addGraph() {
 		show.onclick = function() {
 			graphDiv.style.display = 'inline';
 			hide.style.display = 'inline';
+			show.style.display = 'none';
 		}
 		//add buttons to graph div
 		div.appendChild(dlte);
 		div.appendChild(show);
 		div.appendChild(hide);
+
+		show.style.display = 'none';
 	};
 	var form = document.createElement('div');
 	form.appendChild(input);
