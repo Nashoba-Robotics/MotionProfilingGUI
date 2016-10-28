@@ -1,3 +1,5 @@
+var cols = 1;
+
 function addGraph() {
 
 	//Button to name graph
@@ -18,6 +20,7 @@ function addGraph() {
 		};
 		var data = [t1];
 		var layout = {
+			width: document.getElementById('graphContainer').clientWidth / cols,
 			title: graphName,
 		};
 		Plotly.newPlot(graphDiv, data, layout);
