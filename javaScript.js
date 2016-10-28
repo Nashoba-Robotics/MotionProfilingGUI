@@ -1,4 +1,4 @@
-var cols = 1;
+var cols = 2;
 
 function showValue(newValue) {
 	document.getElementById("range").innerHTML = newValue;
@@ -6,7 +6,6 @@ function showValue(newValue) {
 }
 
 function addGraph() {
-
 	//Button to name graph
 	var input = document.createElement('input');
 	var button = document.createElement('button');
@@ -26,6 +25,7 @@ function addGraph() {
 		var data = [t1];
 		var layout = {
 			width: document.getElementById('graphContainer').clientWidth / cols,
+			height: document.getElementById('graphContainer').clientWidth / cols / 1.5,
 			title: graphName,
 		};
 		Plotly.newPlot(graphDiv, data, layout);
@@ -68,7 +68,8 @@ function addGraph() {
 
 		//Hides show button to start
 		show.style.display = 'none';
-	};
+	}
+
 	var form = document.createElement('div');
 	form.appendChild(input);
 	form.appendChild(button);
