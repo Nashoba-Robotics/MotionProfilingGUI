@@ -1,5 +1,10 @@
 var cols = 1;
 
+function showValue(newValue) {
+	document.getElementById("range").innerHTML = newValue;
+	cols = newValue;
+}
+
 function addGraph() {
 
 	//Button to name graph
