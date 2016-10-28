@@ -7,6 +7,7 @@ function addGraph() {
 	button.onclick = function() {
 		var graphName = input.value;
 		form.parentNode.removeChild(form);
+		var graphDiv = document.createElement('div');
 		var div = document.createElement('div');
 		//the graph
 		div.style.width = '50%';
@@ -18,9 +19,10 @@ function addGraph() {
 		var data = [t1];
 		var layout = {
 			title: graphName,
-			width:'100%',
 		};
-		Plotly.newPlot(div, data, layout);
+		Plotly.newPlot(graphDiv, data, layout);
+
+		div.appendChild(graphDiv);
 		document.getElementById('graphContainer').appendChild(div);
 
 		//Initializes delete, hide, and show buttons above graph
@@ -36,13 +38,15 @@ function addGraph() {
 		//Function for hide graph
 		hide.innerHTML = 'Hide Graph';
 		hide.onclick = function() {
-
+			hide.style.display = 'none';
+			graphDiv.style.display = 'none';
 		}
 		
 		//Function for show graph
 		show.innerHTML = 'Show graph';
 		show.onclick = function() {
-			
+			hide.style.display = 'block';
+			graphDiv.style.display = 'block';
 		}
 		//add buttons to graph div
 		div.appendChild(dlte);
