@@ -33,7 +33,8 @@ function addGraph() {
 		//Function for delete button
 		dlte.innerHTML = 'Delete Graph';
 		dlte.onclick = function() {
-
+			Plotly.purge(graphDiv);
+			div.parentNode.removeChild(div);
 		}
 		
 		//Function for hide graph
@@ -51,11 +52,13 @@ function addGraph() {
 			hide.style.display = 'inline';
 			show.style.display = 'none';
 		}
-		//add buttons to graph div
+
+		//Add buttons to graph div
 		div.appendChild(dlte);
 		div.appendChild(show);
 		div.appendChild(hide);
 
+		//Hides show button to start
 		show.style.display = 'none';
 	};
 	var form = document.createElement('div');
