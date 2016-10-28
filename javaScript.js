@@ -2,7 +2,7 @@ var cols = 2;
 
 function showValue(newValue) {
 	document.getElementById("range").innerHTML = newValue;
-	cols = newValue;
+	cols = newValue;//need to add graph size refresh on slide bar change
 }
 
 function addGraph() {
@@ -25,7 +25,7 @@ function addGraph() {
 		var data = [t1];
 		var layout = {
 			width: document.getElementById('graphContainer').clientWidth / cols,
-			height: document.getElementById('graphContainer').clientWidth / cols / 1.5,
+			height: (document.getElementById('graphContainer').clientWidth / cols) / 1.5,
 			title: graphName,
 		};
 		Plotly.newPlot(graphDiv, data, layout);
