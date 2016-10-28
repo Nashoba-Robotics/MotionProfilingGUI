@@ -8,6 +8,7 @@ function addGraph() {
 		var graphName = input.value;
 		form.parentNode.removeChild(form);
 		var div = document.createElement('div');
+		//the graph
 		div.style.width = '50%';
 		var t1 = {
 			x:[],
@@ -21,32 +22,37 @@ function addGraph() {
 		};
 		Plotly.newPlot(div, data, layout);
 		document.getElementById('graphContainer').appendChild(div);
+
+		//Initializes delete, hide, and show buttons above graph
+		var dlte = document.createElement('button');
+		var hide = document.createElement('button');
+		var show = document.createElement('button');
+		//Function for delete button
+		dlte.innerHTML = 'Delete Graph';
+		dlte.onclick = function() {
+
+		}
+		
+		//Function for hide graph
+		hide.innerHTML = 'Hide Graph';
+		hide.onclick = function() {
+
+		}
+		
+		//Function for show graph
+		show.innerHTML = 'Show graph';
+		show.onclick = function() {
+			
+		}
+		//add buttons to graph div
+		div.appendChild(dlte);
+		div.appendChild(hide);
+		div.appendChild(show);
 	};
 	var form = document.createElement('div');
 	form.appendChild(input);
 	form.appendChild(button);
 	document.getElementById('graphContainer').appendChild(form);
 
-	//Initializes delete, hide, and show buttons above graph
-	var button = document.createElement('dlte');
-	var button = document.createElement('hide');
-	var button = document.createElement('show');
-
-	//Function for delete button
-	dlte.innerHTML = 'Delete Graph';
-	dlte.onclick = function() {
-
-	}
 	
-	//Function for hide graph
-	hide.innerHTML = 'Hide Graph';
-	hide.onclick = function() {
-
-	}
-	
-	//Function for show graph
-	show.innerHTML = 'Show graph';
-	show.onclick = function() {
-		
-	}
 }
