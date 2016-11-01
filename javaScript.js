@@ -3,6 +3,16 @@ var cols = 2;
 function showValue(newValue) {
 	document.getElementById("range").innerHTML = newValue;
 	cols = newValue;//need to add graph size refresh on slide bar change
+
+	var graphs = document.getElementsByClassName('graphDiv');
+	var update = {
+		width: document.getElementById('graphContainer').clientWidth / cols,
+		height: (document.getElementById('graphContainer').clientWidth / cols) / 1.5
+	};
+	//use chrome debugger to find errors in code
+	for(i in graphs) {
+		Plotly.relayout(i, update);
+	}
 }
 
 function addGraph() {
@@ -15,18 +25,19 @@ function addGraph() {
 		form.parentNode.removeChild(form);
 		var graphDiv = document.createElement('div');
 		var div = document.createElement('div');
+		graphDiv.class = 'graphDiv';
 		//the graph
 		div.style.width = '50%';
 		var t1 = {
-			x:[],
-			y:[],
+			x:[1, 2, 3],
+			y:[3, 2, 1],
 			mode:'lines'
 		};
 		var data = [t1];
 		var layout = {
 			width: document.getElementById('graphContainer').clientWidth / cols,
 			height: (document.getElementById('graphContainer').clientWidth / cols) / 1.5,
-			title: graphName,
+			title: graphName
 		};
 		Plotly.newPlot(graphDiv, data, layout);
 
