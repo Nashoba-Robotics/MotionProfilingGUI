@@ -2,72 +2,72 @@ var cols = 2;
 
 var Graph = function() {
 	//Button to name graph
-	this.input = document.createElement('input');
+	var input = document.createElement('input');
 	this.button = document.createElement('button');
-	button.innerHTML = 'Enter';
-	button.onclick = function insertPlot() {
+	this.button.innerHTML = 'Enter';
+	this.button.onclick = function insertPlot() {
 		this.graphName = input.value;
 		form.parentNode.removeChild(form);
 		this.graphDiv = document.createElement('div');
-		this.div = document.createElement('div');
-		graphDiv.class = 'graphDiv';
+		var div = document.createElement('div');
+		this.graphDiv.class = 'graphDiv';
 		//the graph
 		this.t1 = {
 			x:[],
 			y:[],
 			mode:'lines'
 		};
-		this. data = [t1];
+		this. data = [this.t1];
 		this.layout = {
 			width: document.getElementById('graphContainer').clientWidth / cols,
 			height: (document.getElementById('graphContainer').clientWidth / cols) / 1.5,
-			title: graphName
+			title: this.graphName
 		};
-		Plotly.newPlot(graphDiv, data, layout);
+		Plotly.newPlot(this.graphDiv, this.data, this.layout);
 
-		div.appendChild(graphDiv);
+		div.appendChild(this.graphDiv);
 		document.getElementById('graphContainer').appendChild(div);
 
 		//Initializes delete, hide, and show buttons above graph
-		dlte = document.createElement('button');
-		hide = document.createElement('button');
-		show = document.createElement('button');
+		this.dlte = document.createElement('button');
+		this.hide = document.createElement('button');
+		this.show = document.createElement('button');
 		
 		//Function for delete button
-		dlte.innerHTML = 'Delete Graph';
-		dlte.onclick = function deletes() {
-			Plotly.purge(graphDiv);
+		this.dlte.innerHTML = 'Delete Graph';
+		this.dlte.onclick = function deletes() {
+			Plotly.purge(this.graphDiv);
 			div.parentNode.removeChild(div);
 		}
 		
 		//Function for hide graph
-		hide.innerHTML = 'Hide Graph';
-		hide.onclick = function() {
-			hide.style.display = 'none';
-			graphDiv.style.display = 'none';
-			show.style.display = 'inline';
+		this.hide.innerHTML = 'Hide Graph';
+		this.hide.onclick = function() {
+			this.hide.style.display = 'none';
+			this.graphDiv.style.display = 'none';
+			this.show.style.display = 'inline';
 		}
 		
 		//Function for show graph
-		show.innerHTML = 'Show graph';
-		show.onclick = function() {
-			graphDiv.style.display = 'inline';
-			hide.style.display = 'inline';
-			show.style.display = 'none';
+		this.show.innerHTML = 'Show graph';
+		this.show.onclick = function() {
+			this.graphDiv.style.display = 'inline';
+			this.hide.style.display = 'inline';
+			this.show.style.display = 'none';
 		}
 
 		//Add buttons to graph div
-		div.appendChild(dlte);
-		div.appendChild(show);
-		div.appendChild(hide);
+		div.appendChild(this.dlte);
+		div.appendChild(this.show);
+		div.appendChild(this.hide);
 
 		//Hides show button to start
-		show.style.display = 'none';
+		this.show.style.display = 'none';
 	}
 
-	this.form = document.createElement('div');
+	var form = document.createElement('div');
 	form.appendChild(input);
-	form.appendChild(button);
+	form.appendChild(this.button);
 	document.getElementById('graphContainer').appendChild(form);
 }
 
@@ -75,7 +75,8 @@ var GraphMaster = function() {
 	this.graphs = [];
 
 	document.getElementById('addGraphButton').addEventListener('click', function() {
-		document.write('asdsad');//GraphMaster.graphs.push(new Graph());
+		var temp = new Graph();
+		graphHolder.graphs.push(temp);
 	});
 }
 
@@ -83,3 +84,5 @@ function showValue(newValue) {
 	document.getElementById("range").innerHTML = newValue;
 	cols = newValue;//need to add graph size refresh on slide bar change
 }
+
+var graphHolder = new GraphMaster();
