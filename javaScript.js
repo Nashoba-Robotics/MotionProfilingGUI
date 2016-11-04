@@ -73,9 +73,10 @@ var Graph = function() {
 
 var GraphMaster = function() {
 	this.graphs = [];
-	this.addGraph = function() {
-		graphs.append(new Graph());
-	}
+
+	document.getElementById('addGraphButton').addEventListener('click', function() {
+		document.write('asdsad');//GraphMaster.graphs.push(new Graph());
+	});
 }
 
 function showValue(newValue) {
