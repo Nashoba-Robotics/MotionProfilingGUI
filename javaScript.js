@@ -5,7 +5,7 @@ var Graph = function() {
 	var input = document.createElement('input');
 	this.button = document.createElement('button');
 	this.button.innerHTML = 'Enter';
-	this.button.onclick = function insertPlot() {
+	this.button.onclick = function() {
 		this.graphName = input.value;
 		form.parentNode.removeChild(form);
 		this.graphDiv = document.createElement('div');
@@ -17,7 +17,7 @@ var Graph = function() {
 			y:[],
 			mode:'lines'
 		};
-		this. data = [this.t1];
+		this.data = [this.t1];
 		this.layout = {
 			width: document.getElementById('graphContainer').clientWidth / cols,
 			height: (document.getElementById('graphContainer').clientWidth / cols) / 1.5,
@@ -32,28 +32,31 @@ var Graph = function() {
 		this.dlte = document.createElement('button');
 		this.hide = document.createElement('button');
 		this.show = document.createElement('button');
-		
+
+		//Lets buttons refer to Graph object rather than button objects
+		var self = this;
+
 		//Function for delete button
 		this.dlte.innerHTML = 'Delete Graph';
-		this.dlte.onclick = function deletes() {
-			Plotly.purge(this.graphDiv);
+		this.dlte.onclick = function() {
+			Plotly.purge(self.graphDiv);
 			div.parentNode.removeChild(div);
 		}
 		
 		//Function for hide graph
 		this.hide.innerHTML = 'Hide Graph';
 		this.hide.onclick = function() {
-			this.hide.style.display = 'none';
-			this.graphDiv.style.display = 'none';
-			this.show.style.display = 'inline';
+			self.hide.style.display = 'none';
+			self.show.style.display = 'inline';
+			self.graphDiv.style.display = 'none';
 		}
 		
 		//Function for show graph
 		this.show.innerHTML = 'Show graph';
 		this.show.onclick = function() {
-			this.graphDiv.style.display = 'inline';
-			this.hide.style.display = 'inline';
-			this.show.style.display = 'none';
+			self.graphDiv.style.display = 'inline';
+			self.hide.style.display = 'inline';
+			self.show.style.display = 'none';
 		}
 
 		//Add buttons to graph div
