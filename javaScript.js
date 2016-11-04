@@ -1,7 +1,4 @@
 var cols = 2;
-var dlte;
-var hide;
-var show;
 
 function addGraph() {
 	//Button to name graph
@@ -60,10 +57,6 @@ function addGraph() {
 			show.style.display = 'none';
 		}
 
-		function redraw() {
-			Plotly.redraw(graphDiv);
-		}
-
 		//Add buttons to graph div
 		div.appendChild(dlte);
 		div.appendChild(show);
@@ -82,8 +75,6 @@ function addGraph() {
 function showValue(newValue) {
 	document.getElementById("range").innerHTML = newValue;
 	cols = newValue;//need to add graph size refresh on slide bar change
-
-	redraw();
 
 	var graphs = document.getElementsByClassName('graphDiv');
 	var update = {
