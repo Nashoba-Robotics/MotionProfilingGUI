@@ -1,25 +1,24 @@
 var cols = 2;
 
-function addGraph() {
+var Graph = function() {
 	//Button to name graph
-	var input = document.createElement('input');
-	var button = document.createElement('button');
+	this.input = document.createElement('input');
+	this.button = document.createElement('button');
 	button.innerHTML = 'Enter';
 	button.onclick = function insertPlot() {
-		var graphName = input.value;
+		this.graphName = input.value;
 		form.parentNode.removeChild(form);
-		var graphDiv = document.createElement('div');
-		var div = document.createElement('div');
+		this.graphDiv = document.createElement('div');
+		this.div = document.createElement('div');
 		graphDiv.class = 'graphDiv';
 		//the graph
-		div.style.width = '50%';
-		var t1 = {
+		this.t1 = {
 			x:[],
 			y:[],
 			mode:'lines'
 		};
-		var data = [t1];
-		var layout = {
+		this. data = [t1];
+		this.layout = {
 			width: document.getElementById('graphContainer').clientWidth / cols,
 			height: (document.getElementById('graphContainer').clientWidth / cols) / 1.5,
 			title: graphName
@@ -66,23 +65,20 @@ function addGraph() {
 		show.style.display = 'none';
 	}
 
-	var form = document.createElement('div');
+	this.form = document.createElement('div');
 	form.appendChild(input);
 	form.appendChild(button);
-	document.getElementById('graphContainer').appendChild(form);	
+	document.getElementById('graphContainer').appendChild(form);
+}
+
+var GraphMaster = function() {
+	this.graphs = [];
+	this.addGraph = function() {
+		graphs.append(new Graph());
+	}
 }
 
 function showValue(newValue) {
 	document.getElementById("range").innerHTML = newValue;
 	cols = newValue;//need to add graph size refresh on slide bar change
-
-	var graphs = document.getElementsByClassName('graphDiv');
-	var update = {
-		width: document.getElementById('graphContainer').clientWidth / cols,
-		height: (document.getElementById('graphContainer').clientWidth / cols) / 1.5
-	};
-	//use chrome debugger to find errors in code
-	for(i in graphs) {
-		Plotly.relayout(i, update);
-	}
 }
