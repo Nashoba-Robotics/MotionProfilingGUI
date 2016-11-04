@@ -4,8 +4,8 @@ body {
 
 li a {
     display: block;
-    color: green;
-    border-left: 3px solid green;
+    color: #176817;
+    border-left: 3px solid #176817;
     background-color: white;
     text-align: left;
     font-size: 20px;
@@ -14,9 +14,10 @@ li a {
     height: 100%;
 }
 
-p {
-    color: green;
+#subHead {
+    color: #176817;
     font-style: italic;
+    font-size: 50px;
     font-family: impact;
     text-shadow: 10px 10px #0A2A0A;
 }
@@ -31,13 +32,14 @@ p {
 }
 
 #hamburger {
-    color: green;
+    color: #176817;
 }
 
 #gaveBenProblems {
+    font-size: 100px;
     font-style: italic;
     font-family: impact;
-    color: green;
+    color: #176817;
     text-shadow: 10px 10px #0A2A0A;
 }
 
@@ -46,5 +48,5 @@ p {
 }
 
 #topBar {
-    background-color: #373737;
+    background-color: #254254;
 }
