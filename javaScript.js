@@ -1,26 +1,14 @@
 var cols = 2;
-
-function showValue(newValue) {
-	document.getElementById("range").innerHTML = newValue;
-	cols = newValue;//need to add graph size refresh on slide bar change
-
-	var graphs = document.getElementsByClassName('graphDiv');
-	var update = {
-		width: document.getElementById('graphContainer').clientWidth / cols,
-		height: (document.getElementById('graphContainer').clientWidth / cols) / 1.5
-	};
-	//use chrome debugger to find errors in code
-	for(i in graphs) {
-		Plotly.relayout(i, update);
-	}
-}
+var dlte;
+var hide;
+var show;
 
 function addGraph() {
 	//Button to name graph
 	var input = document.createElement('input');
 	var button = document.createElement('button');
 	button.innerHTML = 'Enter';
-	button.onclick = function() {
+	button.onclick = function insertPlot() {
 		var graphName = input.value;
 		form.parentNode.removeChild(form);
 		var graphDiv = document.createElement('div');
@@ -29,8 +17,8 @@ function addGraph() {
 		//the graph
 		div.style.width = '50%';
 		var t1 = {
-			x:[1, 2, 3],
-			y:[3, 2, 1],
+			x:[],
+			y:[],
 			mode:'lines'
 		};
 		var data = [t1];
@@ -45,13 +33,13 @@ function addGraph() {
 		document.getElementById('graphContainer').appendChild(div);
 
 		//Initializes delete, hide, and show buttons above graph
-		var dlte = document.createElement('button');
-		var hide = document.createElement('button');
-		var show = document.createElement('button');
+		dlte = document.createElement('button');
+		hide = document.createElement('button');
+		show = document.createElement('button');
 		
 		//Function for delete button
 		dlte.innerHTML = 'Delete Graph';
-		dlte.onclick = function() {
+		dlte.onclick = function deletes() {
 			Plotly.purge(graphDiv);
 			div.parentNode.removeChild(div);
 		}
@@ -72,6 +60,10 @@ function addGraph() {
 			show.style.display = 'none';
 		}
 
+		function redraw() {
+			Plotly.redraw(graphDiv);
+		}
+
 		//Add buttons to graph div
 		div.appendChild(dlte);
 		div.appendChild(show);
@@ -84,6 +76,22 @@ function addGraph() {
 	var form = document.createElement('div');
 	form.appendChild(input);
 	form.appendChild(button);
-	document.getElementById('graphContainer').appendChild(form);
-	
+	document.getElementById('graphContainer').appendChild(form);	
+}
+
+function showValue(newValue) {
+	document.getElementById("range").innerHTML = newValue;
+	cols = newValue;//need to add graph size refresh on slide bar change
+
+	redraw();
+
+	var graphs = document.getElementsByClassName('graphDiv');
+	var update = {
+		width: document.getElementById('graphContainer').clientWidth / cols,
+		height: (document.getElementById('graphContainer').clientWidth / cols) / 1.5
+	};
+	//use chrome debugger to find errors in code
+	for(i in graphs) {
+		Plotly.relayout(i, update);
+	}
 }
