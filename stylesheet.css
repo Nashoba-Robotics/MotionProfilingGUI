@@ -1,6 +1,12 @@
+body {
+    background-color: white;
+}
+
 li a {
     display: block;
-    color: white;
+    color: green;
+    border-left: 3px solid green;
+    background-color: white;
     text-align: left;
     font-size: 20px;
     text-decoration: none;
@@ -8,11 +14,37 @@ li a {
     height: 100%;
 }
 
+p {
+    color: green;
+    font-style: italic;
+    font-family: impact;
+    text-shadow: 10px 10px #0A2A0A;
+}
+
 #tester {
 	height: 300px;
 	width: 100%;
 }
 
+#hamburgerContainer {
+    background-color: white;
+}
+
+#hamburger {
+    color: green;
+}
+
+#gaveBenProblems {
+    font-style: italic;
+    font-family: impact;
+    color: green;
+    text-shadow: 10px 10px #0A2A0A;
+}
+
 #TopRow {
     height: 300px;
+}
+
+#topBar {
+    background-color: #373737;
 }
