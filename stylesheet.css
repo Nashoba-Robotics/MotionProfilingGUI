@@ -6,7 +6,9 @@ li a {
     display: block;
     color: #176817;
     border-left: 3px solid #176817;
-    background-color: white;
+    border-bottom: 3px solid #176817;
+    border-right: 3px solid #176817;
+    background-color: black;
     text-align: left;
     font-size: 20px;
     text-decoration: none;
@@ -28,7 +30,8 @@ li a {
 }
 
 #hamburgerContainer {
-    background-color: white;
+    background-color: black;
+    border-bottom: 3px solid #176817;
 }
 
 #hamburger {
@@ -48,5 +51,25 @@ li a {
 }
 
 #topBar {
-    background-color: #254254;
+    background-color: black;
+}
+
+#graphButtons {
+    background-color: black;
+}
+
+#graphButtons li a{
+    color: #176817;
+}
+
+#range {
+    color: #176817;
+    font-size: 20px;
+}
+
+#layoutButtons {
+    background-color: black;
+    border-left: 3px solid #176817;
+    border-bottom: 3px solid #176817;
+    border-right: 3px solid #176817;
 }
