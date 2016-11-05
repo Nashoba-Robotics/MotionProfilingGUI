@@ -83,9 +83,14 @@ var GraphMaster = function() {
 	});
 }
 
+var graphHolder = new GraphMaster();
+
 function showValue(newValue) {
 	document.getElementById("range").innerHTML = newValue;
-	cols = newValue;//need to add graph size refresh on slide bar change
+	cols = newValue;
+	//need to add graph size refresh on slide bar change
+	for (var graph = 0; graph < graphHolder.graphs.length; graph++) {
+		//Plotly.redraw(graphHolder.graphs[graph].graphDiv);
+		//Above comment was attempt at redrawing graphs, obviously not correct, but loop works, so keep it
+	} 
 }
-
-var graphHolder = new GraphMaster();
