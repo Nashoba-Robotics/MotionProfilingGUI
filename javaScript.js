@@ -2,85 +2,94 @@ var cols = 2;
 
 var Graph = function() {
 	//Button to name graph
-	var input = document.createElement('input');
-	this.button = document.createElement('button');
-	this.button.innerHTML = 'Enter';
-	this.button.onclick = function() {
-		this.graphName = input.value;
-		form.parentNode.removeChild(form);
-		this.graphDiv = document.createElement('div');
-		var div = document.createElement('div');
-		this.graphDiv.class = 'graphDiv';
+	var self = this;
+	self.input = document.createElement('input');
+	self.button = document.createElement('button');
+	self.button.innerHTML = 'Enter';
+	self.button.onclick = function() {
+		self.graphName = self.input.value;
+		self.form.parentNode.removeChild(self.form);
+		self.graphDiv = document.createElement('div');
+		self.div = document.createElement('div');
 		//the graph
-		this.t1 = {
-			x:[],
-			y:[],
+		self.t1 = {
+			x:[1, 2, 3],
+			y:[3, 2, 1],
 			mode:'lines'
 		};
-		this.data = [this.t1];
-		this.layout = {
+		self.data = [self.t1];
+		self.layout = {
 			width: document.getElementById('graphContainer').clientWidth / cols,
 			height: (document.getElementById('graphContainer').clientWidth / cols) / 1.5,
-			title: this.graphName
+			title: self.graphName
 		};
-		Plotly.newPlot(this.graphDiv, this.data, this.layout);
+		Plotly.newPlot(self.graphDiv, self.data, self.layout);
 
-		div.appendChild(this.graphDiv);
-		document.getElementById('graphContainer').appendChild(div);
+		self.div.appendChild(self.graphDiv);
+		document.getElementById('graphContainer').appendChild(self.div);
 
 		//Initializes delete, hide, and show buttons above graph
-		this.dlte = document.createElement('button');
-		this.hide = document.createElement('button');
-		this.show = document.createElement('button');
-
-		//Lets buttons refer to Graph object rather than button objects
-		var self = this;
+		self.dlte = document.createElement('button');
+		self.hide = document.createElement('button');
+		self.show = document.createElement('button');
 
 		//Function for delete button
-		this.dlte.innerHTML = 'Delete Graph';
-		this.dlte.onclick = function() {
+		self.dlte.innerHTML = 'Delete Graph';
+		self.dlte.onclick = function() {
 			Plotly.purge(self.graphDiv);
-			div.parentNode.removeChild(div);
+			self.div.parentNode.removeChild(self.div);
 		}
 		
 		//Function for hide graph
-		this.hide.innerHTML = 'Hide Graph';
-		this.hide.onclick = function() {
+		self.hide.innerHTML = 'Hide Graph';
+		self.hide.onclick = function() {
 			self.hide.style.display = 'none';
 			self.show.style.display = 'inline';
 			self.graphDiv.style.display = 'none';
 		}
 		
 		//Function for show graph
-		this.show.innerHTML = 'Show graph';
-		this.show.onclick = function() {
+		self.show.innerHTML = 'Show graph';
+		self.show.onclick = function() {
 			self.graphDiv.style.display = 'inline';
 			self.hide.style.display = 'inline';
 			self.show.style.display = 'none';
 		}
 
 		//Add buttons to graph div
-		div.appendChild(this.dlte);
-		div.appendChild(this.show);
-		div.appendChild(this.hide);
+		self.div.appendChild(self.dlte);
+		self.div.appendChild(self.show);
+		self.div.appendChild(self.hide);
 
 		//Hides show button to start
-		this.show.style.display = 'none';
+		self.show.style.display = 'none';
 	}
 
-	var form = document.createElement('div');
-	form.appendChild(input);
-	form.appendChild(this.button);
-	document.getElementById('graphContainer').appendChild(form);
+	self.form = document.createElement('div');
+	self.form.appendChild(self.input);
+	self.form.appendChild(self.button);
+	document.getElementById('graphContainer').appendChild(self.form);
+
+	return this;
 }
 
 var GraphMaster = function() {
-	this.graphs = [];
+	var self = this;
+	self.graphs = [];
 
 	document.getElementById('addGraphButton').addEventListener('click', function() {
-		var temp = new Graph();
-		graphHolder.graphs.push(temp);
+		this.temp = new Graph();
+		self.graphs.push(this.temp);
 	});
+	this.updateSize = function(x, y) {
+		for(i = 0; i < self.graphs.length; i++) {
+			self.graphs[i].layout = {
+				width: x,
+				height: y
+			};
+			Plotly.relayout(self.graphs[i].graphDiv, self.graphs[i].layout);
+		}
+	};
 }
 
 var graphHolder = new GraphMaster();
@@ -88,9 +97,5 @@ var graphHolder = new GraphMaster();
 function showValue(newValue) {
 	document.getElementById("range").innerHTML = newValue;
 	cols = newValue;
-	//need to add graph size refresh on slide bar change
-	for (var graph = 0; graph < graphHolder.graphs.length; graph++) {
-		//Plotly.redraw(graphHolder.graphs[graph].graphDiv);
-		//Above comment was attempt at redrawing graphs, obviously not correct, but loop works, so keep it
-	} 
+	graphHolder.updateSize(document.getElementById('graphContainer').clientWidth / cols, (document.getElementById('graphContainer').clientWidth / cols) / 1.5);
 }
