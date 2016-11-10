@@ -24,11 +24,6 @@ li a {
     text-shadow: 10px 10px #0A2A0A;
 }
 
-#tester {
-	height: 300px;
-	width: 100%;
-}
-
 #hamburgerContainer {
     background-color: black;
     border-bottom: 3px solid #176817;

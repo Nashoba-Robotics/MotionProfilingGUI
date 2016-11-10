@@ -6,11 +6,11 @@ var Graph = function() {
 	self.input = document.createElement('input');
 	self.button = document.createElement('button');
 	self.button.innerHTML = 'Enter';
+	self.div = document.createElement('div');
 	self.button.onclick = function() {
+		self.graphDiv = document.createElement('div');
 		self.graphName = self.input.value;
 		self.form.parentNode.removeChild(self.form);
-		self.graphDiv = document.createElement('div');
-		self.div = document.createElement('div');
 		//the graph
 		self.t1 = {
 			x:[1, 2, 3],
@@ -68,9 +68,10 @@ var Graph = function() {
 	self.form = document.createElement('div');
 	self.form.appendChild(self.input);
 	self.form.appendChild(self.button);
-	document.getElementById('graphContainer').appendChild(self.form);
+	self.div.appendChild(self.form);
+	document.getElementById('graphContainer').appendChild(self.div);
 
-	return this;
+	return self;
 }
 
 var GraphMaster = function() {
@@ -79,15 +80,21 @@ var GraphMaster = function() {
 
 	document.getElementById('addGraphButton').addEventListener('click', function() {
 		this.temp = new Graph();
+		this.temp.div.style.position = 'absolute';
+		//this.temp.div.style.right = ((document.getElementById('graphContainer').clientWidth / cols) * self.graphs.length) % (self.graphs.length / cols);
 		self.graphs.push(this.temp);
 	});
+
 	this.updateSize = function(x, y) {
 		for(i = 0; i < self.graphs.length; i++) {
-			self.graphs[i].layout = {
-				width: x,
-				height: y
-			};
-			Plotly.relayout(self.graphs[i].graphDiv, self.graphs[i].layout);
+			if(self.graphs[i].graphDiv != null) {
+				self.graphs[i].layout = {
+					width: x,
+					height: y
+				};
+				Plotly.relayout(self.graphs[i].graphDiv, self.graphs[i].layout);
+				Plotly.redraw(self.graphs[i].graphDiv);
+			}
 		}
 	};
 }
