@@ -49,6 +49,10 @@ li a {
     background-color: black;
 }
 
+#graphContainer {
+    position: relative;
+}
+
 #graphButtons {
     background-color: black;
 }

@@ -10,6 +10,7 @@ var Graph = function() {
 	self.button.innerHTML = 'Enter';
 	self.div = document.createElement('div');
 	self.button.onclick = function() {
+		self.aliveness = 2;
 		self.graphDiv = document.createElement('div');
 		self.graphName = self.input.value;
 		self.form.parentNode.removeChild(self.form);
@@ -84,22 +85,40 @@ var GraphMaster = function() {
 	document.getElementById('addGraphButton').addEventListener('click', function() {
 		this.temp = new Graph();
 		this.temp.div.style.position = 'absolute';
-		this.temp.div.style.right = (((document.getElementById('graphContainer').clientWidth / cols) * (self.graphs.length - 1)) % (self.graphs.length / cols)) + 'px';
+		this.temp.div.style.left = ((document.getElementById('graphContainer').clientWidth / cols) * self.graphs.length) % document.getElementById('graphContainer').clientWidth + 'px';
+		this.temp.div.style.top = (Math.floor(self.graphs.length / cols) * ((document.getElementById('graphContainer').clientWidth / cols) / 1.5)) + 35 + 'px';
 		self.graphs.push(this.temp);
 	});
 
 	this.updateSize = function(x, y) {
+		//cleans up array containing dead graphs, should do somewhere else so they don't take up memory untill graphs are resized
+		self.newGraphs = [];
+		self.index = 0;
 		for(i = 0; i < self.graphs.length; i++) {
-			if(self.graphs[i].aliveness == 0) {
-				self.graphs.splice[i];
-			}else if(self.graphs[i].graphDiv != null) {
-				console.log(self.graphs[i]);
+			if(self.graphs[i].aliveness != 0) {
+				//self.graphs.splice[i];//no working
+				self.newGraphs[self.index] = self.graphs[i];
+				self.index++;
+			}
+		}
+		console.log(self.newGraphs);
+		self.graphs = self.newGraphs;
+		console.log(self.graphs);
+		//only after all dead graphs are removed from array
+		for(i = 0; i < self.graphs.length; i++) {
+			if(self.graphs[i].aliveness == 2) {
 				self.graphs[i].layout = {
 					width: x,
 					height: y
 				};
 				Plotly.relayout(self.graphs[i].graphDiv, self.graphs[i].layout);
 				Plotly.redraw(self.graphs[i].graphDiv);
+			}
+			if(self.graphs[i].aliveness > 0) {
+				//reposition
+				self.graphs[i].div.style.position = 'absolute';
+				self.graphs[i].div.style.left = ((document.getElementById('graphContainer').clientWidth / cols) * i) % document.getElementById('graphContainer').clientWidth + 'px';
+				self.graphs[i].div.style.top = (Math.floor(i / cols) * ((document.getElementById('graphContainer').clientWidth / cols) / 1.5)) + 'px';
 			}
 		}
 	};
