@@ -1,6 +1,8 @@
 var cols = 2;
 
 var Graph = function() {
+	this.aliveness = 1;//for delete function
+
 	//Button to name graph
 	var self = this;
 	self.input = document.createElement('input');
@@ -38,6 +40,7 @@ var Graph = function() {
 		self.dlte.onclick = function() {
 			Plotly.purge(self.graphDiv);
 			self.div.parentNode.removeChild(self.div);
+			self.aliveness = 0;
 		}
 		
 		//Function for hide graph
@@ -81,13 +84,16 @@ var GraphMaster = function() {
 	document.getElementById('addGraphButton').addEventListener('click', function() {
 		this.temp = new Graph();
 		this.temp.div.style.position = 'absolute';
-		//this.temp.div.style.right = ((document.getElementById('graphContainer').clientWidth / cols) * self.graphs.length) % (self.graphs.length / cols);
+		this.temp.div.style.right = (((document.getElementById('graphContainer').clientWidth / cols) * (self.graphs.length - 1)) % (self.graphs.length / cols)) + 'px';
 		self.graphs.push(this.temp);
 	});
 
 	this.updateSize = function(x, y) {
 		for(i = 0; i < self.graphs.length; i++) {
-			if(self.graphs[i].graphDiv != null) {
+			if(self.graphs[i].aliveness == 0) {
+				self.graphs.splice[i];
+			}else if(self.graphs[i].graphDiv != null) {
+				console.log(self.graphs[i]);
 				self.graphs[i].layout = {
 					width: x,
 					height: y
