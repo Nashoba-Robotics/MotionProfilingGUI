@@ -12,6 +12,7 @@ var Graph = function() {
 	self.button.onclick = function() {
 		self.aliveness = 2;
 		self.graphDiv = document.createElement('div');
+		self.div.style.border = "3px solid #000000";
 		self.graphName = self.input.value;
 		self.form.parentNode.removeChild(self.form);
 		//the graph
@@ -120,7 +121,7 @@ var GraphMaster = function() {
 				//reposition
 				self.graphs[i].div.style.position = 'absolute';
 				self.graphs[i].div.style.left = ((document.getElementById('graphContainer').clientWidth / cols) * i) % document.getElementById('graphContainer').clientWidth + 'px';
-				self.graphs[i].div.style.top = (Math.floor(i / cols) * ((document.getElementById('graphContainer').clientWidth / cols) / 1.5)) + 'px';
+				self.graphs[i].div.style.top = (Math.floor(i / cols) * ((document.getElementById('graphContainer').clientWidth / cols) + 70) / 1.5) + 'px';
 			}
 		}
 	};
