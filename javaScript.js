@@ -42,6 +42,7 @@ var Graph = function() {
 			Plotly.purge(self.graphDiv);
 			self.div.parentNode.removeChild(self.div);
 			self.aliveness = 0;
+			graphHolder.updateSize(document.getElementById('graphContainer').clientWidth / cols, (document.getElementById('graphContainer').clientWidth / cols) / 1.5);
 		}
 		
 		//Function for hide graph
