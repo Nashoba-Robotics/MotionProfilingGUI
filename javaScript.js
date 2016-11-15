@@ -89,6 +89,7 @@ var GraphMaster = function() {
 		this.temp.div.style.left = ((document.getElementById('graphContainer').clientWidth / cols) * self.graphs.length) % document.getElementById('graphContainer').clientWidth + 'px';
 		this.temp.div.style.top = (Math.floor(self.graphs.length / cols) * ((document.getElementById('graphContainer').clientWidth / cols) / 1.5)) + 35 + 'px';
 		self.graphs.push(this.temp);
+		self.updateSize();
 	});
 
 	this.updateSize = function(x, y) {
@@ -128,7 +129,9 @@ var GraphMaster = function() {
 var graphHolder = new GraphMaster();
 
 function showValue(newValue) {
+	document.getElementById("loadingAnimat").style.display = "block";
 	document.getElementById("range").innerHTML = newValue;
 	cols = newValue;
 	graphHolder.updateSize(document.getElementById('graphContainer').clientWidth / cols, (document.getElementById('graphContainer').clientWidth / cols) / 1.5);
+	document.getElementById("loadingAnimat").style.display = "none";
 }
