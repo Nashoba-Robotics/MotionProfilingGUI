@@ -40,6 +40,30 @@ var Graph = function() {
 		self.hide = document.createElement('button');
 		self.show = document.createElement('button');
 
+		self.positionButtons = document.createElement('div');
+		self.positionButtons.class = 'modebar-group';
+		self.positionButtons.appendChild(self.dlte);
+		self.dlte.class = 'modebar-btn';
+		self.positionButtons.appendChild(self.hide);
+		self.hide.class = 'modebar-btn';
+
+		function searchClass(className, tempArray) {
+			console.log(tempArray, tempArray[0].class);
+			for(i = 0; i < tempArray.length; i++) {
+				console.log("	", tempArray[i].className, className);
+				if (tempArray[i].className == className) {
+					return tempArray[i];
+				}
+			}
+		}
+		console.log(self.graphDiv.children)
+		self.temp1 = searchClass("plot-container plotly", self.graphDiv.children);
+		console.log(self.temp1)
+		self.temp2 = searchClass("svg-container", self.temp1.children);
+		self.temp3 = searchClass("modebar modebar--hover", self.temp2.children);
+
+		self.temp3.appendChild(self.positionButtons);
+
 		//Function for delete button
 		self.dlte.innerHTML = 'Delete Graph';
 		self.dlte.onclick = function() {
