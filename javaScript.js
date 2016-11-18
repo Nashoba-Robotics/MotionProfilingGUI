@@ -9,10 +9,11 @@ var Graph = function() {
 	self.button = document.createElement('button');
 	self.button.innerHTML = 'Enter';
 	self.div = document.createElement('div');
+
 	self.button.onclick = function() {
 		self.aliveness = 2;
 		self.graphDiv = document.createElement('div');
-		self.div.style.border = "3px solid #000000";
+		//self.div.style.border = "3px solid #000000";
 		self.graphName = self.input.value;
 		self.form.parentNode.removeChild(self.form);
 		//the graph
@@ -108,7 +109,7 @@ var GraphMaster = function() {
 	var self = this;
 	self.graphs = [];
 
-	document.getElementById('addGraphButton').addEventListener('click', function() {
+	document.getElementById('addGraphButton').addEventListener('click', function addGraph(){
 		this.temp = new Graph();
 		this.temp.div.style.position = 'absolute';
 		this.temp.div.style.left = ((document.getElementById('graphContainer').clientWidth / cols) * self.graphs.length) % document.getElementById('graphContainer').clientWidth + 'px';
@@ -159,4 +160,10 @@ function showValue(newValue) {
 	cols = newValue;
 	graphHolder.updateSize(document.getElementById('graphContainer').clientWidth / cols, (document.getElementById('graphContainer').clientWidth / cols) / 1.5);
 	document.getElementById("loadingAnimat").style.display = "none";
+}
+
+document.body.onkeydown = function(e){
+	if((e.key == 'a') | (e.key == '+')){
+		document.getElementById('addGraphButton').click();
+	}
 }
