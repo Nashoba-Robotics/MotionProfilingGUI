@@ -10,6 +10,8 @@ var Graph = function() {
 	self.button.innerHTML = 'Enter';
 	self.div = document.createElement('div');
 
+	self.button.click();
+
 	self.button.onclick = function() {
 		self.aliveness = 2;
 		self.graphDiv = document.createElement('div');
@@ -103,6 +105,7 @@ var GraphMaster = function() {
 				//self.graphs.splice[i];//no working
 				self.newGraphs[self.index] = self.graphs[i];
 				self.index++;
+				document.getElementById("loadingAnimat").style.display = "none";
 			}
 		}
 		console.log(self.newGraphs);
@@ -122,7 +125,7 @@ var GraphMaster = function() {
 				//reposition
 				self.graphs[i].div.style.position = 'absolute';
 				self.graphs[i].div.style.left = ((document.getElementById('graphContainer').clientWidth / cols) * i) % document.getElementById('graphContainer').clientWidth + 'px';
-				self.graphs[i].div.style.top = (Math.floor(i / cols) * ((document.getElementById('graphContainer').clientWidth / cols) + 70) / 1.5) + 'px';
+				self.graphs[i].div.style.top = (Math.floor(i / cols) * ((document.getElementById('graphContainer').clientWidth / cols) + 80) / 1.5) + 'px';
 			}
 		}
 	};
@@ -135,7 +138,6 @@ function showValue(newValue) {
 	document.getElementById("range").innerHTML = newValue;
 	cols = newValue;
 	graphHolder.updateSize(document.getElementById('graphContainer').clientWidth / cols, (document.getElementById('graphContainer').clientWidth / cols) / 1.5);
-	document.getElementById("loadingAnimat").style.display = "none";
 }
 
 document.body.onkeydown = function(e){
