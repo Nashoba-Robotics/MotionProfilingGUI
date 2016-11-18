@@ -129,12 +129,6 @@ var GraphMaster = function() {
 				//self.graphs.splice[i];//no working
 				self.newGraphs[self.index] = self.graphs[i];
 				self.index++;
-				var millisecondsToWait = 5;
-				setTimeout(function() {
-
-
-				document.getElementById("loadingAnimat").style.display = "none";
-			}, millisecondsToWait);
 			}
 		}
 		console.log(self.newGraphs);
@@ -167,10 +161,15 @@ function showValue(newValue) {
 	document.getElementById("range").innerHTML = newValue;
 	cols = newValue;
 	graphHolder.updateSize(document.getElementById('graphContainer').clientWidth / cols, (document.getElementById('graphContainer').clientWidth / cols) / 1.5);
+	var millisecondsToWait = 0;
+	setTimeout(function() {
+		document.getElementById("loadingAnimat").style.display = "none";
+	}, millisecondsToWait);
 }
 
 document.body.onkeydown = function(e){
-	if((e.key == 'a') | (e.key == '+')){
+	console.log(e.key);
+	if((e.key == 'Control') || (e.key == '+')){
 		document.getElementById('addGraphButton').click();
 	}
 }
