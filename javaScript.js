@@ -10,16 +10,10 @@ var Graph = function() {
 	self.button.innerHTML = 'Enter';
 	self.div = document.createElement('div');
 
-	self.button.onkeydown = function(e) {
-		if(e.key == '-') {
-			self.button.click();
-		}
-	}
-
 	self.button.onclick = function() {
 		self.aliveness = 2;
 		self.graphDiv = document.createElement('div');
-		self.div.style.border = "3px solid #000000";
+		//self.div.style.border = "3px solid #000000";
 		self.graphName = self.input.value;
 		self.form.parentNode.removeChild(self.form);
 		//the graph
@@ -145,7 +139,7 @@ function showValue(newValue) {
 }
 
 document.body.onkeydown = function(e){
-	if(e.key == '+') {
+	if((e.key == 'a') | (e.key == '+')){
 		document.getElementById('addGraphButton').click();
 	}
 }
