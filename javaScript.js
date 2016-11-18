@@ -105,7 +105,12 @@ var GraphMaster = function() {
 				//self.graphs.splice[i];//no working
 				self.newGraphs[self.index] = self.graphs[i];
 				self.index++;
+				var millisecondsToWait = 5;
+				setTimeout(function() {
+
+
 				document.getElementById("loadingAnimat").style.display = "none";
+			}, millisecondsToWait);
 			}
 		}
 		console.log(self.newGraphs);
