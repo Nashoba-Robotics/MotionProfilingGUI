@@ -33,36 +33,50 @@ var Graph = function() {
 		document.getElementById('graphContainer').appendChild(self.div);
 
 		//Initializes delete, hide, and show buttons above graph
-		self.dlte = document.createElement('button');
-		self.hide = document.createElement('button');
 		self.show = document.createElement('button');
 
-		self.positionButtons = document.createElement('div');
-		self.positionButtons.class = 'modebar-group';
-		self.positionButtons.appendChild(self.dlte);
-		self.dlte.class = 'modebar-btn';
-		self.positionButtons.appendChild(self.hide);
-		self.hide.class = 'modebar-btn';
+		self.trash = document.createElement('span');
+		self.trash.className = 'glyphicon glyphicon-trash';
 
-		function searchClass(className, tempArray) {
-			console.log(tempArray, tempArray[0].class);
-			for(i = 0; i < tempArray.length; i++) {
-				console.log("	", tempArray[i].className, className);
-				if (tempArray[i].className == className) {
-					return tempArray[i];
+		self.hideGlyph = document.createElement('span');
+		self.hideGlyph.className = 'glyphicon glyphicon-minus-sign';
+
+		self.dlte = document.createElement('a');
+		self.dlte.className = 'modebar-btn';
+		self.dlte.setAttribute('data-title', 'Delete Graph');
+		self.dlte.appendChild(self.trash);
+
+		self.hide = document.createElement('a');
+		self.hide.className = 'modebar-btn';
+		self.hide.setAttribute('data-title', 'Hide Graph');
+		self.hide.appendChild(self.hideGlyph);
+
+		self.positionButtons = document.createElement('div');
+		self.positionButtons.className = 'modebar-group';
+		self.positionButtons.appendChild(self.dlte);
+		self.positionButtons.appendChild(self.hide);
+
+
+		function searchClass(className, tempDiv) {
+			this.tempArray = tempDiv.children;
+			//console.log(this.tempArray, this.tempArray[0].class);
+			for(i = 0; i < this.tempArray.length; i++) {
+				//console.log("	", this.tempArray[i].className, className);
+				if (this.tempArray[i].className == className) {
+					return this.tempArray[i];
 				}
 			}
 		}
-		console.log(self.graphDiv.children)
-		self.temp1 = searchClass("plot-container plotly", self.graphDiv.children);
-		console.log(self.temp1)
-		self.temp2 = searchClass("svg-container", self.temp1.children);
-		self.temp3 = searchClass("modebar modebar--hover", self.temp2.children);
+		//console.log(self.graphDiv.children)
+		self.temp1 = searchClass("plot-container plotly", self.graphDiv);
+		//console.log(self.temp1)
+		self.temp2 = searchClass("svg-container", self.temp1);
+		self.temp3 = searchClass("modebar modebar--hover", self.temp2);
 
 		self.temp3.appendChild(self.positionButtons);
 
 		//Function for delete button
-		self.dlte.innerHTML = 'Delete Graph';
+		//self.dlte.innerHTML = 'Delete Graph';
 		self.dlte.onclick = function() {
 			Plotly.purge(self.graphDiv);
 			self.div.parentNode.removeChild(self.div);
@@ -71,7 +85,7 @@ var Graph = function() {
 		}
 		
 		//Function for hide graph
-		self.hide.innerHTML = 'Hide Graph';
+		//self.hide.innerHTML = 'Hide Graph';
 		self.hide.onclick = function() {
 			self.hide.style.display = 'none';
 			self.show.style.display = 'inline';
@@ -87,9 +101,9 @@ var Graph = function() {
 		}
 
 		//Add buttons to graph div
-		self.div.appendChild(self.dlte);
+		//self.div.appendChild(self.dlte);
 		self.div.appendChild(self.show);
-		self.div.appendChild(self.hide);
+		//self.div.appendChild(self.hide);
 
 		//Hides show button to start
 		self.show.style.display = 'none';
@@ -128,9 +142,9 @@ var GraphMaster = function() {
 				self.index++;
 			}
 		}
-		console.log(self.newGraphs);
+		//console.log(self.newGraphs);
 		self.graphs = self.newGraphs;
-		console.log(self.graphs);
+		//console.log(self.graphs);
 		//only after all dead graphs are removed from array
 		for(i = 0; i < self.graphs.length; i++) {
 			if(self.graphs[i].aliveness == 2) {
