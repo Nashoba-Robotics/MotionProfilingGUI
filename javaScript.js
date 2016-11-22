@@ -37,6 +37,7 @@ var Graph = function() {
 
 		//Initializes delete, hide, and show buttons above graph
 		self.show = document.createElement('button');
+		self.delete = document.createElement('button');
 
 		self.trash = document.createElement('span');
 		self.trash.className = 'glyphicon glyphicon-trash';
@@ -92,6 +93,7 @@ var Graph = function() {
 		self.hide.onclick = function() {
 			self.hide.style.display = 'none';
 			self.show.style.display = 'inline';
+			self.delete.style.display = 'inline';
 			self.graphDiv.style.display = 'none';
 		}
 		
@@ -103,13 +105,22 @@ var Graph = function() {
 			self.show.style.display = 'none';
 		}
 
+		//Function for delete graph
+		self.delete.innerHTML = 'Delete graph';
+		self.delete.onclick = function() {
+			Plotly.purge(self.graphDiv);
+			self.div.parentNode.removeChild(self.div);
+			self.aliveness = 0;
+			graphHolder.updateSize(document.getElementById('graphContainer').clientWidth / cols, (document.getElementById('graphContainer').clientWidth / cols) / 1.5);
+		}
+
 		//Add buttons to graph div
-		//self.div.appendChild(self.dlte);
 		self.div.appendChild(self.show);
-		//self.div.appendChild(self.hide);
+		self.div.appendChild(self.delete);
 
 		//Hides show button to start
 		self.show.style.display = 'none';
+		self.delete.style.display = 'none';
 	}
 
 	self.form = document.createElement('div');
