@@ -10,6 +10,8 @@ var Graph = function() {
 	self.button.innerHTML = 'Enter';
 	self.div = document.createElement('div');
 
+	self.button.click();
+
 	self.button.onclick = function() {
 		self.aliveness = 2;
 		self.graphDiv = document.createElement('div');
@@ -35,6 +37,7 @@ var Graph = function() {
 
 		//Initializes delete, hide, and show buttons above graph
 		self.show = document.createElement('button');
+		self.delete = document.createElement('button');
 
 		self.trash = document.createElement('span');
 		self.trash.className = 'glyphicon glyphicon-trash';
@@ -90,6 +93,7 @@ var Graph = function() {
 		self.hide.onclick = function() {
 			self.hide.style.display = 'none';
 			self.show.style.display = 'inline';
+			self.delete.style.display = 'inline';
 			self.graphDiv.style.display = 'none';
 		}
 		
@@ -101,13 +105,22 @@ var Graph = function() {
 			self.show.style.display = 'none';
 		}
 
+		//Function for delete graph
+		self.delete.innerHTML = 'Delete graph';
+		self.delete.onclick = function() {
+			Plotly.purge(self.graphDiv);
+			self.div.parentNode.removeChild(self.div);
+			self.aliveness = 0;
+			graphHolder.updateSize(document.getElementById('graphContainer').clientWidth / cols, (document.getElementById('graphContainer').clientWidth / cols) / 1.5);
+		}
+
 		//Add buttons to graph div
-		//self.div.appendChild(self.dlte);
 		self.div.appendChild(self.show);
-		//self.div.appendChild(self.hide);
+		self.div.appendChild(self.delete);
 
 		//Hides show button to start
 		self.show.style.display = 'none';
+		self.delete.style.display = 'none';
 	}
 
 	self.form = document.createElement('div');
@@ -160,7 +173,7 @@ var GraphMaster = function() {
 				//reposition
 				self.graphs[i].div.style.position = 'absolute';
 				self.graphs[i].div.style.left = ((document.getElementById('graphContainer').clientWidth / cols) * i) % document.getElementById('graphContainer').clientWidth + 'px';
-				self.graphs[i].div.style.top = (Math.floor(i / cols) * ((document.getElementById('graphContainer').clientWidth / cols) + 70) / 1.5) + 'px';
+				self.graphs[i].div.style.top = (Math.floor(i / cols) * ((document.getElementById('graphContainer').clientWidth / cols) + 80) / 1.5) + 'px';
 			}
 		}
 	};
@@ -173,11 +186,15 @@ function showValue(newValue) {
 	document.getElementById("range").innerHTML = newValue;
 	cols = newValue;
 	graphHolder.updateSize(document.getElementById('graphContainer').clientWidth / cols, (document.getElementById('graphContainer').clientWidth / cols) / 1.5);
-	document.getElementById("loadingAnimat").style.display = "none";
+	var millisecondsToWait = 0;
+	setTimeout(function() {
+		document.getElementById("loadingAnimat").style.display = "none";
+	}, millisecondsToWait);
 }
 
 document.body.onkeydown = function(e){
-	if((e.key == 'a') | (e.key == '+')){
+	console.log(e.key);
+	if((e.key == 'Control') || (e.key == '+')){
 		document.getElementById('addGraphButton').click();
 	}
 }
