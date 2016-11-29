@@ -8,6 +8,7 @@ li a {
     border-left: 3px solid #176817;
     border-bottom: 3px solid #176817;
     border-right: 3px solid #176817;
+    border-top: 3px solid #176817;
     background-color: black;
     text-align: left;
     font-size: 20px;
@@ -52,7 +53,7 @@ li a {
 #graphContainer {
     position: relative;
 }
-/*adding a testing comment*/
+
 #graphButtons {
     background-color: black;
 }
@@ -61,13 +62,21 @@ li a {
     color: #176817;
 }
 
-#range {
+#layoutButtons {
+    background-color: black;
+}
+
+#layoutButtons li a{
     color: #176817;
     font-size: 20px;
 }
 
-#layoutButtons {
+#inputButtons {
     background-color: black;
+}
+
+#inputButtons li a{
+    color: #176817;
 }
 
 /*

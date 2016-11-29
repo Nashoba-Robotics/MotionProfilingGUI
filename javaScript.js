@@ -29,9 +29,10 @@ var Graph = function() {
 		//the graph
 		self.t1 = {
 			x:[1, 2, 3],
-			y:[3, 2, 1],
+			y:[1, 2, 3],
 			mode:'lines'
 		};
+
 		self.data = [self.t1];
 		self.layout = {
 			autosize: false,
@@ -51,30 +52,40 @@ var Graph = function() {
 		self.div.appendChild(self.graphDiv);
 		document.getElementById('graphContainer').appendChild(self.div);
 
-		//Initializes delete, hide, and show buttons above graph
+		//Initializes delete, hide, show, and create CSV buttons above graph
 		self.show = document.createElement('button');
 		self.delete = document.createElement('button');
 
-		self.trash = document.createElement('span');
-		self.trash.className = 'glyphicon glyphicon-trash';
+		self.trashGlyph = document.createElement('span');
+		self.trashGlyph.className = 'glyphicon glyphicon-trash';
 
 		self.hideGlyph = document.createElement('span');
 		self.hideGlyph.className = 'glyphicon glyphicon-minus-sign';
 
+		self.csvGlyph = document.createElement('span');
+		self.csvGlyph.className = 'glyphicon glyphicon-download-alt';
+
 		self.dlte = document.createElement('a');
 		self.dlte.className = 'modebar-btn';
 		self.dlte.setAttribute('data-title', 'Delete Graph');
-		self.dlte.appendChild(self.trash);
+		self.dlte.appendChild(self.trashGlyph);
 
 		self.hide = document.createElement('a');
 		self.hide.className = 'modebar-btn';
 		self.hide.setAttribute('data-title', 'Hide Graph');
 		self.hide.appendChild(self.hideGlyph);
 
+		self.csv = document.createElement('a');
+		self.csv.classNme = 'modebar-btn';
+		self.csv.setAttribute('data-title', 'Download CSV');
+		self.csv.appendChild(self.csvGlyph);
+
+
 		self.positionButtons = document.createElement('div');
 		self.positionButtons.className = 'modebar-group';
 		self.positionButtons.appendChild(self.dlte);
 		self.positionButtons.appendChild(self.hide);
+		self.positionButtons.appendChild(self.csv);
 
 
 		function searchClass(className, tempDiv) {
@@ -113,6 +124,10 @@ var Graph = function() {
 			self.graphDiv.style.display = 'none';
 		}
 		
+		self.csv.onclick = function() {
+			downloadCSV({ filename: (self.graphName + ".csv")}, self.t1);
+		}
+
 		//Function for show graph
 		self.show.innerHTML = 'Show graph';
 		self.show.onclick = function() {
@@ -137,6 +152,8 @@ var Graph = function() {
 		//Hides show button to start
 		self.show.style.display = 'none';
 		self.delete.style.display = 'none';
+
+		graphHolder.updateSize(document.getElementById('graphContainer').clientWidth / cols, (document.getElementById('graphContainer').clientWidth / cols) / 1.5);
 	}
 
 	self.form = document.createElement('div');
@@ -158,7 +175,7 @@ var GraphMaster = function() {
 		this.temp.div.style.left = ((document.getElementById('graphContainer').clientWidth / cols) * self.graphs.length) % document.getElementById('graphContainer').clientWidth + 'px';
 		this.temp.div.style.top = (Math.floor(self.graphs.length / cols) * ((document.getElementById('graphContainer').clientWidth / cols) / 1.5)) + 35 + 'px';
 		self.graphs.push(this.temp);
-		self.updateSize();
+		graphHolder.updateSize(document.getElementById('graphContainer').clientWidth / cols, (document.getElementById('graphContainer').clientWidth / cols) / 1.5);
 	});
 
 	this.updateSize = function(x, y) {
@@ -213,4 +230,56 @@ document.body.onkeydown = function(e){
 	if(e.key == '+'){
 		document.getElementById('addGraphButton').click();
 	}
+}
+
+//Following two functions deal with downloading CSWV
+function convertArrayOfObjectsToCSV(args) {  
+    var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+
+    data = args.data || null;
+    if (data == null || !data.length) {
+        return null;
+    }
+
+    columnDelimiter = args.columnDelimiter || ',';
+    lineDelimiter = args.lineDelimiter || '\n';
+
+    keys = Object.keys(data[0]);
+
+    result = '';
+    result += keys.join(columnDelimiter);
+    result += lineDelimiter;
+
+    data.forEach(function(item) {
+        ctr = 0;
+        keys.forEach(function(key) {
+            if (ctr > 0) result += columnDelimiter;
+
+            result += item[key];
+            ctr++;
+        });
+        result += lineDelimiter;
+    });
+
+    return result;
+}
+
+function downloadCSV(args, dataSet) {  
+    var data, filename, link;
+    var csv = convertArrayOfObjectsToCSV({
+        //data = dataSet;
+    });
+    if (csv == null) return;
+
+    filename = args.filename || 'export.csv';
+
+    if (!csv.match(/^data:text\/csv/i)) {
+        csv = 'data:text/csv;charset=utf-8,' + csv;
+    }
+    data = encodeURI(csv);
+
+    link = document.createElement('a');
+    link.setAttribute('href', data);
+    link.setAttribute('download', filename);
+    link.click();
 }
