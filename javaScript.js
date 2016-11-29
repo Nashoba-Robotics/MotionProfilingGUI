@@ -152,6 +152,8 @@ var Graph = function() {
 		//Hides show button to start
 		self.show.style.display = 'none';
 		self.delete.style.display = 'none';
+
+		graphHolder.updateSize(document.getElementById('graphContainer').clientWidth / cols, (document.getElementById('graphContainer').clientWidth / cols) / 1.5);
 	}
 
 	self.form = document.createElement('div');
