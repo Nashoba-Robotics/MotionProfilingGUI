@@ -1,4 +1,4 @@
-var cols = 4;
+var cols;
 var keys = [];
 $(document).keypress(function(e) {
 	keys[e.which] = true;
@@ -209,7 +209,7 @@ function showValue(newValue) {
 }
 
 document.body.onkeydown = function(e){
-	//console.log(e.key);
+	console.log(e.key);
 	if(/*(e.key == 'Control') || */(e.key == '+')){
 		document.getElementById('addGraphButton').click();
 	}
