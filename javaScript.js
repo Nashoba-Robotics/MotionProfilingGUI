@@ -1,4 +1,12 @@
-var cols = 2;
+var cols = 4;
+var keys = [];
+$(document).keypress(function(e) {
+	keys[e.which] = true;
+});
+$(document).keyup(function(e) {
+	keys[e.which] = false;
+});
+
 
 var Graph = function() {
 	this.aliveness = 1;//for delete function
@@ -201,8 +209,8 @@ function showValue(newValue) {
 }
 
 document.body.onkeydown = function(e){
-	console.log(e.key);
-	if((e.key == 'Control') || (e.key == '+')){
+	//console.log(e.key);
+	if(/*(e.key == 'Control') || */(e.key == '+')){
 		document.getElementById('addGraphButton').click();
 	}
 }
