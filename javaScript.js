@@ -1,4 +1,12 @@
 var cols = 2;
+var keys = [];
+$(document).keypress(function(e) {
+	keys[e.which] = true;
+});
+$(document).keyup(function(e) {
+	keys[e.which] = false;
+});
+
 
 var Graph = function() {
 	this.aliveness = 1;//for delete function
@@ -15,7 +23,7 @@ var Graph = function() {
 	self.button.onclick = function() {
 		self.aliveness = 2;
 		self.graphDiv = document.createElement('div');
-		//self.div.style.border = "3px solid #000000";
+		self.div.style.border = "2px solid #000000";
 		self.graphName = self.input.value;
 		self.form.parentNode.removeChild(self.form);
 		//the graph
@@ -27,9 +35,17 @@ var Graph = function() {
 
 		self.data = [self.t1];
 		self.layout = {
+			autosize: false,
 			width: document.getElementById('graphContainer').clientWidth / cols,
 			height: (document.getElementById('graphContainer').clientWidth / cols) / 1.5,
-			title: self.graphName
+			title: self.graphName,
+			margin: {
+				l: 25,
+   				r: 25,
+				b: 25,
+   				t: 25,
+				pad: 4
+ 			 }
 		};
 		Plotly.newPlot(self.graphDiv, self.data, self.layout);
 
@@ -151,7 +167,7 @@ var GraphMaster = function() {
 	var self = this;
 	self.graphs = [];
 
-	document.getElementById('addGraphButton').addEventListener('click', function addGraph(){
+	document.getElementById('addGraphButton').addEventListener('click', function addGraph() {
 		this.temp = new Graph();
 		this.temp.div.style.position = 'absolute';
 		this.temp.div.style.left = ((document.getElementById('graphContainer').clientWidth / cols) * self.graphs.length) % document.getElementById('graphContainer').clientWidth + 'px';
@@ -209,7 +225,7 @@ function showValue(newValue) {
 
 document.body.onkeydown = function(e){
 	console.log(e.key);
-	if((e.key == 'Control') || (e.key == '+')){
+	if(e.key == '+'){
 		document.getElementById('addGraphButton').click();
 	}
 }
