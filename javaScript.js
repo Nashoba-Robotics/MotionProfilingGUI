@@ -28,8 +28,8 @@ var Graph = function() {
 		self.form.parentNode.removeChild(self.form);
 		//the graph
 		self.t1 = {
-			x:[],
-			y:[],
+			x:[1, 2, 3],
+			y:[1, 2, 3],
 			mode:'lines'
 		};
 
@@ -173,7 +173,7 @@ var GraphMaster = function() {
 		this.temp.div.style.left = ((document.getElementById('graphContainer').clientWidth / cols) * self.graphs.length) % document.getElementById('graphContainer').clientWidth + 'px';
 		this.temp.div.style.top = (Math.floor(self.graphs.length / cols) * ((document.getElementById('graphContainer').clientWidth / cols) / 1.5)) + 35 + 'px';
 		self.graphs.push(this.temp);
-		self.updateSize();
+		graphHolder.updateSize(document.getElementById('graphContainer').clientWidth / cols, (document.getElementById('graphContainer').clientWidth / cols) / 1.5);
 	});
 
 	this.updateSize = function(x, y) {
@@ -265,7 +265,7 @@ function convertArrayOfObjectsToCSV(args) {
 function downloadCSV(args, dataSet) {  
     var data, filename, link;
     var csv = convertArrayOfObjectsToCSV({
-        data: dataSet;
+        //data = dataSet;
     });
     if (csv == null) return;
 
