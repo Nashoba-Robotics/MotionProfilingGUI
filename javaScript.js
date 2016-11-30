@@ -125,7 +125,10 @@ var Graph = function() {
 		}
 		
 		self.csv.onclick = function() {
-			downloadCSV({ filename: (self.graphName + ".csv")}, self.t1);
+			var message = downloadCSV({ filename: (self.graphName + ".csv")}, self.t1);
+			if (message == "F"){
+				alert("No data to download");
+			}
 		}
 
 		//Function for show graph
@@ -226,7 +229,7 @@ function showValue(newValue) {
 }
 
 document.body.onkeydown = function(e){
-	console.log(e.key);
+	//console.log(e.key);
 	if(e.key == '+'){
 		document.getElementById('addGraphButton').click();
 	}
@@ -236,7 +239,7 @@ document.body.onkeydown = function(e){
 function convertArrayOfObjectsToCSV(args) {  
     var result, ctr, keys, columnDelimiter, lineDelimiter, data;
 
-    data = args.data || null;
+    data = [args.x, args.y] || null;
     if (data == null || !data.length) {
         return null;
     }
@@ -247,8 +250,6 @@ function convertArrayOfObjectsToCSV(args) {
     keys = Object.keys(data[0]);
 
     result = '';
-    result += keys.join(columnDelimiter);
-    result += lineDelimiter;
 
     data.forEach(function(item) {
         ctr = 0;
@@ -261,15 +262,16 @@ function convertArrayOfObjectsToCSV(args) {
         result += lineDelimiter;
     });
 
+    console.log(result);
     return result;
 }
 
 function downloadCSV(args, dataSet) {  
     var data, filename, link;
-    var csv = convertArrayOfObjectsToCSV({
-        //data = dataSet;
-    });
-    if (csv == null) return;
+    var csv = convertArrayOfObjectsToCSV(dataSet);
+    if (csv == null) {
+    	return "F";
+    }
 
     filename = args.filename || 'export.csv';
 
