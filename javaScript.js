@@ -214,3 +214,39 @@ document.body.onkeydown = function(e){
 		document.getElementById('addGraphButton').click();
 	}
 }
+
+/*
+websocket stuff
+HAVE:
+-Data(input*text box*)
+--self.input
+--self.input *default val* not working
+--initstream*begin a websocket*
+---**self.socket should append to a dictionary of sockets
+---reset default val of input(not working)
+---send initialization message to server
+TODO:
+-use a dictionary to store connections
+--need to add another textbox
+-overview of connections(table like?)
+-close connection
+-store/log data points publicly
+-
+*/
+var Data =  function(input) {
+	self = this;
+	self.input = input;//input text box
+	self.input.value = "ws://www.";//not working
+	self.initStream = function() {
+		try {
+			self.socket = new WebSocket("ws://www.");// + self.input.value); //invalid concatenation
+			self.input.value = "ws://www.";//not working
+			//self.socket.send("init message"); //no .send method
+		}catch(err) {
+			alert(err);
+		}
+	}	
+}
+
+var data = new Data( $("socketInput") );
+//data.initStream(); //for debugging
