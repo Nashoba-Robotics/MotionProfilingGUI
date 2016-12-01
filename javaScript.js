@@ -233,20 +233,36 @@ TODO:
 -store/log data points publicly
 -
 */
-var Data =  function(input) {
+var Data =  function(inputForm) {
 	self = this;
-	self.input = input;//input text box
-	self.input.value = "ws://www.";//not working
-	self.initStream = function() {
-		try {
-			self.socket = new WebSocket("ws://www.");// + self.input.value); //invalid concatenation
-			self.input.value = "ws://www.";//not working
-			//self.socket.send("init message"); //no .send method
+	self.input = inputForm;
+
+	self.text = document.createElement("input");
+	self.text.type = 'text';
+	self.text.value = 'ws://';
+	self.input.appendChild(self.text);//input text box
+	
+	self.reset = document.createElement('button');
+	self.reset.innerHTML = 'Reset';
+	self.reset.onclick = function() {
+		self.text.value = 'ws://';
+	}
+	self.input.appendChild(self.reset);
+
+	self.submit = document.createElement('button');
+	self.submit.innerHTML = 'Submit';
+	self.submit.onclick = function() {//needed in submit button
+		try {					//-->possibly add event handlet for return key to activate
+			self.socket = new WebSocket(self.text.value);
+			self.reset.click();
+			self.socket.send("init message"); //no .send method
 		}catch(err) {
-			alert(err);
+			alert(err + "\ncouldn't connect to: " + self.text.value);
 		}
-	}	
+	};
+	self.input.appendChild(self.submit);
+
+
 }
 
-var data = new Data( $("socketInput") );
-//data.initStream(); //for debugging
+var data = new Data( document.getElementById('socketInput') );//$("#socketInput") );
