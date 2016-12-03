@@ -177,12 +177,9 @@ var Graph = function() {
 	self.div.appendChild(self.form);
 	document.getElementById('graphContainer').appendChild(self.div);
 
-function isHover(e) {
-  return (e.parentElement.querySelector(':hover') === e);
-}
-setInterval(function() {
-  console.log(isHover(document.getElementById('hoverDiv')));
-}, 100);
+	function isHover(e) {
+  		return (e.parentElement.querySelector(':hover') === e);
+	}
 
 	return self;
 }
@@ -199,8 +196,6 @@ var GraphMaster = function() {
 		self.graphs.push(this.temp);
 		graphHolder.updateSize(document.getElementById('graphContainer').clientWidth / cols, (document.getElementById('graphContainer').clientWidth / cols) / 1.5);
 	});
-
-
 
 	this.updateSize = function(x, y) {
 		//cleans up array containing dead graphs, should do somewhere else so they don't take up memory untill graphs are resized
