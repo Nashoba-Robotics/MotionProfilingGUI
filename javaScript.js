@@ -7,7 +7,6 @@ $(document).keyup(function(e) {
 	keys[e.which] = false;
 });
 
-
 var Graph = function() {
 	this.aliveness = 1;//for delete function
 
@@ -52,7 +51,7 @@ var Graph = function() {
 		self.div.appendChild(self.graphDiv);
 		document.getElementById('graphContainer').appendChild(self.div);
 
-		//Initializes delete, hide, show, and create CSV buttons above graph
+		//Initializes delete, hide, show, create CSV, and input data buttons above graph
 		self.show = document.createElement('button');
 		self.delete = document.createElement('button');
 
@@ -65,6 +64,9 @@ var Graph = function() {
 		self.csvGlyph = document.createElement('span');
 		self.csvGlyph.className = 'glyphicon glyphicon-download-alt';
 
+		self.uploadGlyph = document.createElement('span');
+		self.uploadGlyph.className = 'glyphicon glyphicon-upload';
+
 		self.dlte = document.createElement('a');
 		self.dlte.className = 'modebar-btn';
 		self.dlte.setAttribute('data-title', 'Delete Graph');
@@ -76,16 +78,21 @@ var Graph = function() {
 		self.hide.appendChild(self.hideGlyph);
 
 		self.csv = document.createElement('a');
-		self.csv.classNme = 'modebar-btn';
+		self.csv.className = 'modebar-btn';
 		self.csv.setAttribute('data-title', 'Download CSV');
 		self.csv.appendChild(self.csvGlyph);
 
+		self.upload = document.createElement('a');
+		self.upload.className = 'modebar-btn';
+		self.upload.setAttribute('data-title', 'Upload Data');
+		self.upload.appendChild(self.uploadGlyph);
 
 		self.positionButtons = document.createElement('div');
 		self.positionButtons.className = 'modebar-group';
 		self.positionButtons.appendChild(self.dlte);
 		self.positionButtons.appendChild(self.hide);
 		self.positionButtons.appendChild(self.csv);
+		self.positionButtons.appendChild(self.upload);
 
 
 		function searchClass(className, tempDiv) {
@@ -125,10 +132,14 @@ var Graph = function() {
 		}
 		
 		self.csv.onclick = function() {
-			var message = downloadCSV({ filename: (self.graphName + ".csv")}, self.t1);
-			if (message == "F"){
+			var failed = downloadCSV({ filename: (self.graphName + ".csv")}, self.t1);
+			if (failed) {
 				alert("No data to download");
 			}
+		}
+
+		self.upload.onclick = function() {
+
 		}
 
 		//Function for show graph
@@ -262,7 +273,6 @@ function convertArrayOfObjectsToCSV(args) {
         result += lineDelimiter;
     });
 
-    console.log(result);
     return result;
 }
 
@@ -270,7 +280,7 @@ function downloadCSV(args, dataSet) {
     var data, filename, link;
     var csv = convertArrayOfObjectsToCSV(dataSet);
     if (csv == null) {
-    	return "F";
+    	return true;
     }
 
     filename = args.filename || 'export.csv';
@@ -278,6 +288,7 @@ function downloadCSV(args, dataSet) {
     if (!csv.match(/^data:text\/csv/i)) {
         csv = 'data:text/csv;charset=utf-8,' + csv;
     }
+    
     data = encodeURI(csv);
 
     link = document.createElement('a');
@@ -285,3 +296,9 @@ function downloadCSV(args, dataSet) {
     link.setAttribute('download', filename);
     link.click();
 }
+
+PapaParse.parse('Graphsss.csv', {
+    complete: function(results) {
+        console.log(results);
+    }
+});
