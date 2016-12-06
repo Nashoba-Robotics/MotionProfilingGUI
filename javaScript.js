@@ -80,7 +80,7 @@ var Graph = function() {
 
 		self.csv = document.createElement('a');
 		self.csv.className = 'modebar-btn';
-		self.csv.setAttribute('data-title', 'Download CSV');
+		self.csv.setAttribute('data-title', 'Save CSV');
 		self.csv.appendChild(self.csvGlyph);
 
 		self.upload = document.createElement('a');
@@ -149,6 +149,7 @@ var Graph = function() {
 			self.graphDiv.style.display = 'inline';
 			self.hide.style.display = 'inline';
 			self.show.style.display = 'none';
+			self.delete.style.display = 'none';
 		}
 
 		//Function for delete graph
@@ -251,7 +252,7 @@ document.body.onkeydown = function(e){
 	}
 }
 
-//Following two functions deal with downloading CSWV
+//Following two functions deal with downloading CSV
 function convertArrayOfObjectsToCSV(args) {  
     var result, ctr, keys, columnDelimiter, lineDelimiter, data;
 
