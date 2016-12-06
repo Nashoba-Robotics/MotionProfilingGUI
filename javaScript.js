@@ -23,7 +23,7 @@ var Graph = function() {
 	self.button.onclick = function() {
 		self.aliveness = 2;
 		self.graphDiv = document.createElement('div');
-		self.div.style.border = "2px solid #000000";
+		//self.div.style.border = "2px solid #000000";
 		self.graphName = self.input.value;
 		self.form.parentNode.removeChild(self.form);
 		//the graph
@@ -229,6 +229,9 @@ var GraphMaster = function() {
 				self.graphs[i].div.style.top = (Math.floor(i / cols) * ((document.getElementById('graphContainer').clientWidth / cols) + 80) / 1.5) + 'px';
 			}
 		}
+		if(graphHolder.graphs.length == 1) {
+			graphs[0].div.style.border = "2px solid #000000";
+		}
 	};
 }
 
@@ -303,8 +306,3 @@ function downloadCSV(args, dataSet) {
     link.click();
 }
 
-PapaParse.parse('Graphsss.csv', {
-    complete: function(results) {
-        console.log(results);
-    }
-});
