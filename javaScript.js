@@ -1,5 +1,6 @@
 var cols = 2;
 var keys = [];
+var chosenGraph = 0;
 $(document).keypress(function(e) {
 	keys[e.which] = true;
 });
@@ -23,7 +24,7 @@ var Graph = function() {
 	self.button.onclick = function() {
 		self.aliveness = 2;
 		self.graphDiv = document.createElement('div');
-		//self.div.style.border = "2px solid #000000";
+		//self.div.style.border = "4px solid #000000";
 		self.graphName = self.input.value;
 		self.form.parentNode.removeChild(self.form);
 		//the graph
@@ -229,8 +230,11 @@ var GraphMaster = function() {
 				self.graphs[i].div.style.top = (Math.floor(i / cols) * ((document.getElementById('graphContainer').clientWidth / cols) + 80) / 1.5) + 'px';
 			}
 		}
-		if(graphHolder.graphs.length == 1) {
-			graphs[0].div.style.border = "2px solid #000000";
+		if(graphHolder.graphs.length > 0) {
+			for(graph = 0; graph < graphHolder.graphs.length; graph++) {
+				graphHolder.graphs[graph].div.style.border = "none";
+			}
+			graphHolder.graphs[chosenGraph].div.style.border = "4px solid #000000";
 		}
 	};
 }
@@ -253,6 +257,22 @@ document.body.onkeydown = function(e){
 	if(e.key == '+'){
 		document.getElementById('addGraphButton').click();
 	}
+	else if(e.key == 'ArrowRight' && chosenGraph < graphHolder.graphs.length - 1){
+		chosenGraph += 1;
+	}
+	else if(e.key == 'ArrowLeft' && chosenGraph > 0){
+		chosenGraph -= 1;
+	}
+	else if(e.key == 'ArrowUp' && Math.floor(chosenGraph / cols) > 0) {
+		chosenGraph -= cols;
+		console.log(chosenGraph);
+	}
+	
+	if(e.key == 'ArrowDown' && (chosenGraph + parseInt(cols)) < (graphHolder.graphs.length )) {
+		chosenGraph += parseInt(cols);
+		console.log(chosenGraph);
+	}
+	graphHolder.updateSize(document.getElementById('graphContainer').clientWidth / cols, (document.getElementById('graphContainer').clientWidth / cols) / 1.5);
 }
 
 //Following two functions deal with downloading CSV
