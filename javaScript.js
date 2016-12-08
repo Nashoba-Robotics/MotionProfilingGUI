@@ -238,7 +238,7 @@ var Data =  function(inputForm) {
 	self = this;
 	self.input = inputForm;
 	self.sockets = [];
-	self.infoTableBod = document.getElementById('socketDispBod');
+	self.infoTableBod = document.getElementById('socketDispBod');//localize calls to classes outside of functions scope maybe?
 
 	self.text = document.createElement("input");
 	self.text.type = 'text';
