@@ -218,47 +218,89 @@ document.body.onkeydown = function(e){
 /*
 websocket stuff
 HAVE:
--Data(input*text box*)
---self.input
---self.input *default val* not working
---initstream*begin a websocket*
----**self.socket should append to a dictionary of sockets
----reset default val of input(not working)
----send initialization message to server
+-Data(input*empty div*)
+--self.text
+--self.reset
+--self.submit
+---.onclick = initialize stream
+----initstream*begin a websocket*
+----**self.socket should append to a dictionary of sockets
+----send initialization message to server
 TODO:
 -use a dictionary to store connections
---need to add another textbox
 -overview of connections(table like?)
 -close connection
 -store/log data points publicly
 -
 */
+
 var Data =  function(inputForm) {
 	self = this;
 	self.input = inputForm;
+	self.sockets = [];
+	self.infoTableBod = document.getElementById('socketDispBod');
 
 	self.text = document.createElement("input");
 	self.text.type = 'text';
-	self.text.value = 'ws://';
+	self.text.value = 'ws://192.168.1.1';
 	self.input.appendChild(self.text);//input text box
 	
 	self.reset = document.createElement('button');
 	self.reset.innerHTML = 'Reset';
 	self.reset.onclick = function() {
-		self.text.value = 'ws://';
+		self.text.value = 'ws://192.168.1.1';
 	}
 	self.input.appendChild(self.reset);
 
 	self.submit = document.createElement('button');
 	self.submit.innerHTML = 'Submit';
 	self.submit.onclick = function() {//needed in submit button
-		try {					//-->possibly add event handlet for return key to activate
-			self.socket = new WebSocket(self.text.value);
-			self.reset.click();
-			self.socket.send("init message"); //no .send method
-		}catch(err) {
-			alert(err + "\ncouldn't connect to: " + self.text.value);
+		self.sockets[self.sockets.length] = new WebSocket(self.text.value);
+		var tempSocket = self.sockets[self.sockets.length-1];
+		tempSocket.onerror = function(error) {
+			alert(error + "\ncouldn't connect to: " + tempSocket.url);
+			//console.log(self.sockets);
+
 		}
+		tempSocket.onclose = function() {
+			//self.sockets.splice(self.sockets.indexOf(tempSocket), 1);
+			//alert('Socket closed');
+			//console.log(self.sockets + '\n------');
+		}
+		self.tempSocket.onmessage = funciton(event) {
+/*working here*/			console.log(event.data);///////////////////////////////////////
+		}
+		self.reset.click();
+		var tempRow = document.createElement('tr');
+		var td0 = document.createElement('td');
+		td0.innerHTML = tempSocket.url;
+		tempRow.appendChild(td0);
+		var td1 = document.createElement('td');
+		td1.innerHTML = tempSocket.readyState;
+		td1.style.color = '#F00';
+		tempSocket.onopen = function() {
+			td1.style.color = '#0F0';//possible bug point
+		}
+		tempRow.appendChild(td1);
+		var td2 = document.createElement('td');
+
+		var close = document.createElement('span');
+		close.className = 'glyphicon glyphicon-remove-circle';
+		close.onclick = function() {
+			tempSocket.close();
+			self.sockets.splice(self.sockets.indexOf(tempSocket), 1);
+			document.getElementById('socketDispBod').removeChild(tempRow);
+		}
+		td2.appendChild(close);
+
+		var privew = document.createElement('span');
+		privew.className = 'glyphicon glyphicon-info-sign';
+		privew.onclick = function() {
+			alert('show some data, currently dowsn\'t');
+		}
+		td2.appendChild(privew);
+		tempRow.appendChild(td2);
+		document.getElementById('socketDispBod').appendChild(tempRow);//make it relative to inputform?
 	};
 	self.input.appendChild(self.submit);
 
