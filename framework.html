@@ -34,10 +34,11 @@
 
 		<!--drop down menue-->
 		<nav class="navbar-fixed-top">
-		    <div id="hamburgerContainer" class="navbar-header navbar-inverse">
-		     	<span id="hamburger" data-toggle="collapse" data-target="#navBar" class="navbar-brand glyphicon glyphicon-menu-hamburger"></span>
-		    </div>
+			<div id="hamburgerContainer" class="navbar-header navbar-inverse">
+			 	<span id="hamburger" data-toggle="collapse" data-target="#navBar" class="navbar-brand glyphicon glyphicon-menu-hamburger"></span>
+			</div>
 
+<<<<<<< HEAD
 		    <ul class="navbar-inverse nav navbar-nav collapse" id="navBar">
 		    	
 		    	<!--Dropdown for the Graphs-->
@@ -45,19 +46,40 @@
 		        	<a href="#" id="addGraphButton">Add Graph<span ></span></a>
 		        	<ul id="graphButtons" class="dropdown-menu dropdown-inverse"></ul>
 		        </li>
-
-		        <!--Dropdown for the layout-->
+=======
+			<ul class="navbar-inverse nav navbar-nav collapse" id="navBar">
+				
+				<!--Dropdown for the Graphs-->
 				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Add Graph<span class="caret"></span></a>
+					<ul id="graphButtons" class="dropdown-menu dropdown-inverse">
+				  		<li id="addGraphButton"><a href="#AddGraph">Add4Graph</a></li>
+				  			<input type = "hidden" onclick="showvalue(4)">
+					</ul>
+				</li>
+>>>>>>> server
+
+				<!--Dropdown for the layout-->
+				<li class="dropdown">
+<<<<<<< HEAD
 		        	<a class="dropdown-toggle" data-toggle="dropdown" href="#">Layout
 		        	<span class="caret"></span></a>
 		        	<ul id="layoutButtons" class="dropdown-menu">
 		         		<li><a>
 			         		<input type="range" min="1" max="5" value="2" step="1" onchange="showValue(this.value)" />
 							<span id="range">2</span>
+=======
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Layout<span class="caret"></span></a>
+					<ul id="layoutButtons" class="dropdown-menu">
+				 		<li><a>
+					 		<input type="range" min="1" max="5" value="4" step="1" onchange="showValue(this.value)" />
+							<span id="range">4</span>
+>>>>>>> server
 						</a></li>
-		        	</ul>
-		        </li>
+					</ul>
+				</li>
 
+<<<<<<< HEAD
 		        <!--Dropdown for the Input-->
 		        <li class="dropdown">
 		        	<a class="dropdown-toggle" data-toggle="dropdown" href="#">Input
@@ -66,6 +88,35 @@
 		          		<li><a></a></li>
 		        	</ul>
 		        </li>
+=======
+				<!--Dropdown for the Input-->
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Input<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+				  		<li><a>
+				  			<div id="socketInput"></div>
+			  			</a></li>
+			  			<div onmouseenter="$('#socketDisp').css('display', 'initial');" onmouseleave="$('#socketDisp').css('display', 'none');">
+				  			<li><a>
+				  				<span class="glyphicon glyphicon-chevron-right" style="color:#6F6; width:100%; height:100%;"> Display Socket Info
+			  					</span>
+		  					</a></li>
+		  					<li><a>
+				  				<table id='socketDisp' style="display:none;">
+				  					<thead>
+					  					<tr>
+					  						<th>Socket</th>
+					  						<th>Status</th>
+					  						<th>Actions</th>
+					  					</tr>
+				  					</thead>
+				  					<tbody id="socketDispBod"></tbody>
+				  				</table>
+				  			</a></li>
+			  			</div>
+					</ul>
+				</li>
+>>>>>>> server
 			</ul>
 		</nav>
 
