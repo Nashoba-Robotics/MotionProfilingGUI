@@ -267,7 +267,7 @@ var Data =  function(inputForm) {
 			//alert('Socket closed');
 			//console.log(self.sockets + '\n------');
 		}
-		self.tempSocket.onmessage = funciton(event) {
+		tempSocket.onmessage = function(event) {
 /*working here*/			console.log(event.data);///////////////////////////////////////
 		}
 		self.reset.click();
