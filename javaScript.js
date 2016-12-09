@@ -283,6 +283,10 @@ document.body.onkeydown = function(e){
 		else if(graphHolder.graphs[chosenGraph].aliveness == 3) {
 			graphHolder.graphs[chosenGraph].dlte.click();
 		}
+		else if(graphHolder.graphs[chosenGraph].aliveness == 1) {
+			graphHolder.graphs[chosenGraph].button.click();
+			graphHolder.graphs[chosenGraph].delete.click();
+		}
 	}
 	else if (e.key == 'h'){
 		if(graphHolder.graphs[chosenGraph].aliveness == 2) {
