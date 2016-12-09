@@ -127,6 +127,7 @@ var Graph = function() {
 		//Function for hide graph
 		//self.hide.innerHTML = 'Hide Graph';
 		self.hide.onclick = function() {
+			self.aliveness = 3;
 			self.hide.style.display = 'none';
 			self.show.style.display = 'inline';
 			self.delete.style.display = 'inline';
@@ -147,6 +148,7 @@ var Graph = function() {
 		//Function for show graph
 		self.show.innerHTML = 'Show graph';
 		self.show.onclick = function() {
+			self.aliveness = 2;
 			self.graphDiv.style.display = 'inline';
 			self.hide.style.display = 'inline';
 			self.show.style.display = 'none';
@@ -230,13 +232,16 @@ var GraphMaster = function() {
 				self.graphs[i].div.style.top = (Math.floor(i / cols) * ((document.getElementById('graphContainer').clientWidth / cols) + 80) / 1.5) + 'px';
 			}
 		}
+		self.updateBorder();
+	};
+	this.updateBorder = function() {
 		if(graphHolder.graphs.length > 0) {
 			for(graph = 0; graph < graphHolder.graphs.length; graph++) {
 				graphHolder.graphs[graph].div.style.border = "none";
 			}
 			graphHolder.graphs[chosenGraph].div.style.border = "4px solid #000000";
 		}
-	};
+	}
 }
 
 var graphHolder = new GraphMaster();
@@ -244,7 +249,7 @@ var graphHolder = new GraphMaster();
 function showValue(newValue) {
 	document.getElementById("loadingAnimat").style.display = "block";
 	document.getElementById("range").innerHTML = newValue;
-	cols = newValue;
+	cols = parseInt(newValue);
 	graphHolder.updateSize(document.getElementById('graphContainer').clientWidth / cols, (document.getElementById('graphContainer').clientWidth / cols) / 1.5);
 	var millisecondsToWait = 0;
 	setTimeout(function() {
@@ -265,14 +270,36 @@ document.body.onkeydown = function(e){
 	}
 	else if(e.key == 'ArrowUp' && Math.floor(chosenGraph / cols) > 0) {
 		chosenGraph -= cols;
-		console.log(chosenGraph);
+		//console.log(chosenGraph);
 	}
-	
-	if(e.key == 'ArrowDown' && (chosenGraph + parseInt(cols)) < (graphHolder.graphs.length )) {
-		chosenGraph += parseInt(cols);
-		console.log(chosenGraph);
+	else if(e.key == 'ArrowDown' && chosenGraph + cols < graphHolder.graphs.length) {
+		chosenGraph += cols;
+		//console.log(chosenGraph);
 	}
-	graphHolder.updateSize(document.getElementById('graphContainer').clientWidth / cols, (document.getElementById('graphContainer').clientWidth / cols) / 1.5);
+	else if(e.key == 'd' || e.key == 'Backspace' || e.key == 'Delete') {
+		if(graphHolder.graphs[chosenGraph].aliveness == 2) {
+			graphHolder.graphs[chosenGraph].delete.click();
+		}
+		else if(graphHolder.graphs[chosenGraph].aliveness == 3) {
+			graphHolder.graphs[chosenGraph].dlte.click();
+		}
+	}
+	else if (e.key == 'h'){
+		if(graphHolder.graphs[chosenGraph].aliveness == 2) {
+			graphHolder.graphs[chosenGraph].hide.click();
+		}
+	}
+	else if(e.key == 's') {
+		if(graphHolder.graphs[chosenGraph].aliveness == 3){
+			graphHolder.graphs[chosenGraph].show.click();
+		}
+	}
+	else if(e.key == 'Enter') {
+		if(graphHolder.graphs[chosenGraph].aliveness == 1) {
+			graphHolder.graphs[chosenGraph].button.click();
+		}
+	}
+	graphHolder.updateBorder();
 }
 
 //Following two functions deal with downloading CSV
@@ -305,6 +332,7 @@ function convertArrayOfObjectsToCSV(args) {
     return result;
 }
 
+//Saves CSV
 function downloadCSV(args, dataSet) {  
     var data, filename, link;
     var csv = convertArrayOfObjectsToCSV(dataSet);
