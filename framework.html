@@ -32,7 +32,7 @@
 			</div>
 		</div>
 
-		<!--drop down menue-->
+		<!--drop down menu-->
 		<nav class="navbar-fixed-top">
 			<div id="hamburgerContainer" class="navbar-header navbar-inverse">
 			 	<span id="hamburger" data-toggle="collapse" data-target="#navBar" class="navbar-brand glyphicon glyphicon-menu-hamburger"></span>
@@ -45,16 +45,6 @@
 		        	<a href="#" id="addGraphButton">Add Graph<span ></span></a>
 		        	<ul id="graphButtons" class="dropdown-menu dropdown-inverse"></ul>
 		        </li>
-			<ul class="navbar-inverse nav navbar-nav collapse" id="navBar">
-				
-				<!--Dropdown for the Graphs-->
-				<li class="dropdown">
-					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Add Graph<span class="caret"></span></a>
-					<ul id="graphButtons" class="dropdown-menu dropdown-inverse">
-				  		<li id="addGraphButton"><a href="#AddGraph">Add Graph</a></li>
-				  			<input type = "hidden" onclick="showvalue(4)">
-					</ul>
-				</li>
 
 				<!--Dropdown for the layout-->
 				<li class="dropdown">
@@ -64,23 +54,10 @@
 		         		<li><a>
 			         		<input type="range" min="1" max="5" value="2" step="1" onchange="showValue(this.value)" />
 							<span id="range">2</span>
-					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Layout<span class="caret"></span></a>
-					<ul id="layoutButtons" class="dropdown-menu">
-				 		<li><a>
-					 		<input type="range" min="1" max="5" value="4" step="1" onchange="showValue(this.value)" />
-							<span id="range">4</span>
-						</a></li>
+				 		</a></li>
 					</ul>
 				</li>
 
-		        <!--Dropdown for the Input-->
-		        <li class="dropdown">
-		        	<a class="dropdown-toggle" data-toggle="dropdown" href="#">Input
-		        	<span class="caret"></span></a>
-		        	<ul id = inputButtons class="dropdown-menu">
-		          		<li><a></a></li>
-		        	</ul>
-		        </li>
 				<!--Dropdown for the Input-->
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Input<span class="caret"></span></a>
