@@ -264,7 +264,6 @@ document.body.onkeydown = function(e){
 	if(e.key == '+'){
 		document.getElementById('addGraphButton').click();
 	}
-<<<<<<< HEAD
 	else if(e.key == 'ArrowRight' && chosenGraph < graphHolder.graphs.length - 1){
 		chosenGraph += 1;
 	}
@@ -358,8 +357,6 @@ function downloadCSV(args, dataSet) {
     link.click();
 }
 
-=======
-}
 
 /*
 websocket stuff
@@ -454,4 +451,3 @@ var Data =  function(inputForm) {
 }
 
 var data = new Data( document.getElementById('socketInput') );//$("#socketInput") );
->>>>>>> server
