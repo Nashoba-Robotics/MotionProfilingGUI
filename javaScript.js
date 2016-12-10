@@ -26,13 +26,11 @@ var Graph = function() {
 		self.graphName = self.input.value;
 		self.form.parentNode.removeChild(self.form);
 		//the graph
-		self.t1 = {
+		self.traces = [{
 			x:[1, 2, 3],
 			y:[1, 2, 3],
-			mode:'lines'
-		};
-
-		self.data = [self.t1];
+			mode:'lines'}];
+		self.data = [self.traces[0]];
 		self.layout = {
 			autosize: false,
 			width: document.getElementById('graphContainer').clientWidth / cols,
@@ -119,14 +117,14 @@ var Graph = function() {
 		}
 		
 		self.csv.onclick = function() {
-			var failed = downloadCSV({ filename: (self.graphName + ".csv")}, self.t1);
+			var failed = downloadCSV({ filename: (self.graphName + ".csv")}, self.traces[0]);
 			if (failed) {
 				alert("No data to download");
 			}
 		}
 
 		self.upload.onclick = function() {
-
+			loadDoc(self)
 		}
 
 		//Function for show graph
@@ -291,7 +289,35 @@ document.body.onkeydown = function(e){
 	graphHolder.updateBorder();
 }
 
+function loadDoc(graph) {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+	if (this.readyState == 4 && this.status == 200) {
+		loadTrace(this, graph);
+		}
+  	};
+	xhttp.open("GET", "Graph.xml", true);
+	xhttp.send();
+}
+
+function loadTrace(xml, graph) {
+	var xmlDoc = xml.responseXML;
+	var trace = xmlDoc.getElementsByTagName("TRACE");
+	var t;
+	for(t = 0; t < trace.length; t++) {
+		graph.traces.push({x:[], y:[], mode:'lines'})
+		var point = trace[t].getElementsByTagName("X");
+		var p;
+		for(p = 0; p < point.length; p++) {
+			graph.traces[t].x.push(parseInt(traces[t].getElementsByTagName("X")[p].childNodes[0].nodeValue));
+			graph.traces[t].y.push(parseInt(traces[t].getElementsByTagName("Y")[p].childNodes[0].nodeValue));	
+		}
+	}
+	graphHolder.updateSize(document.getElementById('graphContainer').clientWidth / cols, (document.getElementById('graphContainer').clientWidth / cols) / 1.5);
+}
+
 //Following two functions deal with downloading CSV
+/*
 function convertArrayOfObjectsToCSV(args) {  
 	var result, ctr, keys, columnDelimiter, lineDelimiter, data;
 
@@ -342,6 +368,7 @@ function downloadCSV(args, dataSet) {
 	link.setAttribute('download', filename);
 	link.click();
 }
+*/
 
 
 /*
@@ -428,8 +455,6 @@ var Data =  function(inputForm) {
 		document.getElementById('socketDispBod').appendChild(tempRow);//make it relative to inputform?
 	};
 	self.input.appendChild(self.submit);
-
-
 }
 
 var data = new Data( document.getElementById('socketInput') );//$("#socketInput") );
