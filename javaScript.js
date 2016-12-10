@@ -59,6 +59,7 @@ var Graph = function() {
 			glyphSpan.className = glyph;
 			buttA.className = 'modebar-btn';
 			buttA.setAttribute('data-title', toolTip);
+			buttA.style.backgroundColor = '#3A3';
 			buttA.appendChild(glyphSpan);
 			toAppend.appendChild(buttA);
 			return buttA;			
@@ -71,13 +72,6 @@ var Graph = function() {
 		self.hide = makeModeBut('glyphicon glyphicon-minus-sign', 'Hide Graph', self.positionButtons);
 		self.csv = makeModeBut('glyphicon glyphicon-download-alt', 'Save CSV', self.positionButtons);
 		self.upload = makeModeBut('glyphicon glyphicon-upload', 'Upload Data', self.positionButtons);
-
-		
-		self.positionButtons.appendChild(self.dlte);
-		self.positionButtons.appendChild(self.hide);
-		self.positionButtons.appendChild(self.csv);
-		self.positionButtons.appendChild(self.upload);
-
 
 		function searchClass(className, tempDiv) {
 			this.tempArray = tempDiv.children;
