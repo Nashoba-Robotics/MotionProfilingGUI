@@ -329,54 +329,54 @@ function myFunction(xml, graph) {
 
 //Following two functions deal with downloading CSV
 function convertArrayOfObjectsToCSV(args) {  
-    var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+	var result, ctr, keys, columnDelimiter, lineDelimiter, data;
 
-    data = [args.x, args.y] || null;
-    if (data == null || !data.length) {
-        return null;
-    }
+	data = [args.x, args.y] || null;
+	if (data == null || !data.length) {
+		return null;
+	}
 
-    columnDelimiter = args.columnDelimiter || ',';
-    lineDelimiter = args.lineDelimiter || '\n';
+	columnDelimiter = args.columnDelimiter || ',';
+	lineDelimiter = args.lineDelimiter || '\n';
 
-    keys = Object.keys(data[0]);
+	keys = Object.keys(data[0]);
 
-    result = '';
+	result = '';
 
-    data.forEach(function(item) {
-        ctr = 0;
-        keys.forEach(function(key) {
-            if (ctr > 0) result += columnDelimiter;
+	data.forEach(function(item) {
+		ctr = 0;
+		keys.forEach(function(key) {
+			if (ctr > 0) result += columnDelimiter;
 
-            result += item[key];
-            ctr++;
-        });
-        result += lineDelimiter;
-    });
+			result += item[key];
+			ctr++;
+		});
+		result += lineDelimiter;
+	});
 
-    return result;
+	return result;
 }
 
 //Saves CSV
 function downloadCSV(args, dataSet) {  
-    var data, filename, link;
-    var csv = convertArrayOfObjectsToCSV(dataSet);
-    if (csv == null) {
-    	return true;
-    }
+	var data, filename, link;
+	var csv = convertArrayOfObjectsToCSV(dataSet);
+	if (csv == null) {
+		return true;
+	}
 
-    filename = args.filename || 'export.csv';
+	filename = args.filename || 'export.csv';
 
-    if (!csv.match(/^data:text\/csv/i)) {
-        csv = 'data:text/csv;charset=utf-8,' + csv;
-    }
-    
-    data = encodeURI(csv);
+	if (!csv.match(/^data:text\/csv/i)) {
+		csv = 'data:text/csv;charset=utf-8,' + csv;
+	}
+	
+	data = encodeURI(csv);
 
-    link = document.createElement('a');
-    link.setAttribute('href', data);
-    link.setAttribute('download', filename);
-    link.click();
+	link = document.createElement('a');
+	link.setAttribute('href', data);
+	link.setAttribute('download', filename);
+	link.click();
 }
 
 
