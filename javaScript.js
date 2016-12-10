@@ -140,7 +140,7 @@ var Graph = function() {
 		}
 
 		self.upload.onclick = function() {
-
+			loadDoc(self)
 		}
 
 		//Function for show graph
@@ -305,6 +305,28 @@ document.body.onkeydown = function(e){
 	graphHolder.updateBorder();
 }
 
+function loadDoc(graph) {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    	myFunction(this, graph);
+    	}
+  	};
+	xhttp.open("GET", "Graph.xml", false);
+	xhttp.send();
+}
+
+function myFunction(xml, graph) {
+	var i;
+	var xmlDoc = xml.responseXML;
+	var point = xmlDoc.getElementsByTagName("POINT");
+	for(i = 0; i < point.length; i++) {
+		graph.t1.x[i] = parseInt(point[i].getElementsByTagName("X")[0]);
+		graph.t1.y[i] = parseInt(point[i].getElementsByTagName("Y")[0]);
+	}
+	graphHolder.updateSize(document.getElementById('graphContainer').clientWidth / cols, (document.getElementById('graphContainer').clientWidth / cols) / 1.5);
+}
+
 //Following two functions deal with downloading CSV
 function convertArrayOfObjectsToCSV(args) {  
     var result, ctr, keys, columnDelimiter, lineDelimiter, data;
@@ -446,8 +468,6 @@ var Data =  function(inputForm) {
 		document.getElementById('socketDispBod').appendChild(tempRow);//make it relative to inputform?
 	};
 	self.input.appendChild(self.submit);
-
-
 }
 
 var data = new Data( document.getElementById('socketInput') );//$("#socketInput") );
