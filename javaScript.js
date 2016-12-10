@@ -55,40 +55,26 @@ var Graph = function() {
 		self.show = document.createElement('button');
 		self.delete = document.createElement('button');
 
-		self.trashGlyph = document.createElement('span');
-		self.trashGlyph.className = 'glyphicon glyphicon-trash';
-
-		self.hideGlyph = document.createElement('span');
-		self.hideGlyph.className = 'glyphicon glyphicon-minus-sign';
-
-		self.csvGlyph = document.createElement('span');
-		self.csvGlyph.className = 'glyphicon glyphicon-download-alt';
-
-		self.uploadGlyph = document.createElement('span');
-		self.uploadGlyph.className = 'glyphicon glyphicon-upload';
-
-		self.dlte = document.createElement('a');
-		self.dlte.className = 'modebar-btn';
-		self.dlte.setAttribute('data-title', 'Delete Graph');
-		self.dlte.appendChild(self.trashGlyph);
-
-		self.hide = document.createElement('a');
-		self.hide.className = 'modebar-btn';
-		self.hide.setAttribute('data-title', 'Hide Graph');
-		self.hide.appendChild(self.hideGlyph);
-
-		self.csv = document.createElement('a');
-		self.csv.className = 'modebar-btn';
-		self.csv.setAttribute('data-title', 'Save CSV');
-		self.csv.appendChild(self.csvGlyph);
-
-		self.upload = document.createElement('a');
-		self.upload.className = 'modebar-btn';
-		self.upload.setAttribute('data-title', 'Upload Data');
-		self.upload.appendChild(self.uploadGlyph);
+		function makeModeBut(glyph, toolTip, toAppend) {
+			var glyphSpan = document.createElement('span');
+			var buttA = document.createElement('a');
+			glyphSpan.className = glyph;
+			buttA.className = 'modebar-btn';
+			buttA.setAttribute('data-title', toolTip);
+			buttA.appendChild(glyphSpan);
+			toAppend.appendChild(buttA);
+			return buttA;			
+		}
 
 		self.positionButtons = document.createElement('div');
 		self.positionButtons.className = 'modebar-group';
+
+		self.dlte = makeModeBut('glyphicon glyphicon-trash', 'Delete Graph', self.positionButtons);
+		self.hide = makeModeBut('glyphicon glyphicon-minus-sign', 'Hide Graph', self.positionButtons);
+		self.csv = makeModeBut('glyphicon glyphicon-download-alt', 'Save CSV', self.positionButtons);
+		self.upload = makeModeBut('glyphicon glyphicon-upload', 'Upload Data', self.positionButtons);
+
+		
 		self.positionButtons.appendChild(self.dlte);
 		self.positionButtons.appendChild(self.hide);
 		self.positionButtons.appendChild(self.csv);
@@ -360,7 +346,6 @@ function downloadCSV(args, dataSet) {
 
 /*
 websocket stuff
-HAVE:
 -Data(input*empty div*)
 --self.text
 --self.reset
@@ -369,12 +354,9 @@ HAVE:
 ----initstream*begin a websocket*
 ----**self.socket should append to a dictionary of sockets
 ----send initialization message to server
-TODO:
--use a dictionary to store connections
--overview of connections(table like?)
--close connection
--store/log data points publicly
--
+----tempsocket
+-----.onerror
+-----.onerror
 */
 
 var Data =  function(inputForm) {
