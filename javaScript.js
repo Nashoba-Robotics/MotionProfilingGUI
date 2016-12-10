@@ -230,7 +230,6 @@ var GraphMaster = function() {
 				self.graphs[i].div.style.top = (Math.floor(i / cols) * ((document.getElementById('graphContainer').clientWidth / cols) + 80) / 1.5) + 'px';
 			}
 		}
-		self.updateBorder();
 	};
 	this.updateBorder = function() {
 		if(graphHolder.graphs.length > 0) {
@@ -238,7 +237,6 @@ var GraphMaster = function() {
 				graphHolder.graphs[graph].div.style.border = "none";
 			}
 			if(chosenGraph >= graphHolder.graphs.length) {
-				//console.log("Point reached");
 				chosenGraph = graphHolder.graphs.length - 1;
 			}
 			graphHolder.graphs[chosenGraph].div.style.border = "4px solid #000000";
@@ -264,42 +262,44 @@ document.body.onkeydown = function(e){
 	if(e.key == '+'){
 		document.getElementById('addGraphButton').click();
 	}
-	else if(e.key == 'ArrowRight' && chosenGraph < graphHolder.graphs.length - 1){
-		chosenGraph += 1;
-	}
-	else if(e.key == 'ArrowLeft' && chosenGraph > 0){
-		chosenGraph -= 1;
-	}
-	else if(e.key == 'ArrowUp' && Math.floor(chosenGraph / cols) > 0) {
-		chosenGraph -= cols;
-		//console.log(chosenGraph);
-	}
-	else if(e.key == 'ArrowDown' && chosenGraph + cols < graphHolder.graphs.length) {
-		chosenGraph += cols;
-		//console.log(chosenGraph);
-	}
-	else if(e.key == 'd' || e.key == 'Backspace' || e.key == 'Delete') {
-		if(graphHolder.graphs[chosenGraph].aliveness == 2 || graphHolder.graphs[chosenGraph].aliveness == 3) {
-			graphHolder.graphs[chosenGraph].delete.click();
+	if (graphHolder.graphs.length > 0) {
+		if(e.key == 'ArrowRight' && chosenGraph < graphHolder.graphs.length - 1){
+			chosenGraph += 1;
 		}
-		else if(graphHolder.graphs[chosenGraph].aliveness == 1) {
-			graphHolder.graphs[chosenGraph].button.click();
-			graphHolder.graphs[chosenGraph].delete.click();
+		else if(e.key == 'ArrowLeft' && chosenGraph > 0){
+			chosenGraph -= 1;
 		}
-	}
-	else if (e.key == 'h'){
-		if(graphHolder.graphs[chosenGraph].aliveness == 2) {
-			graphHolder.graphs[chosenGraph].hide.click();
+		else if(e.key == 'ArrowUp' && Math.floor(chosenGraph / cols) > 0) {
+			chosenGraph -= cols;
+			//console.log(chosenGraph);
 		}
-	}
-	else if(e.key == 's') {
-		if(graphHolder.graphs[chosenGraph].aliveness == 3){
-			graphHolder.graphs[chosenGraph].show.click();
+		else if(e.key == 'ArrowDown' && chosenGraph + cols < graphHolder.graphs.length) {
+			chosenGraph += cols;
+			//console.log(chosenGraph);
+		}	
+		else if(e.key == 'd' || e.key == 'Backspace' || e.key == 'Delete') {
+			if(graphHolder.graphs[chosenGraph].aliveness == 2 || graphHolder.graphs[chosenGraph].aliveness == 3) {
+				graphHolder.graphs[chosenGraph].delete.click();
+			}
+			else if(graphHolder.graphs[chosenGraph].aliveness == 1) {
+				graphHolder.graphs[chosenGraph].button.click();
+				graphHolder.graphs[chosenGraph].delete.click();
+			}
 		}
-	}
-	else if(e.key == 'Enter') {
-		if(graphHolder.graphs[chosenGraph].aliveness == 1) {
-			graphHolder.graphs[chosenGraph].button.click();
+		else if (e.key == 'h'){
+			if(graphHolder.graphs[chosenGraph].aliveness == 2) {
+				graphHolder.graphs[chosenGraph].hide.click();
+			}
+		}
+		else if(e.key == 's') {
+			if(graphHolder.graphs[chosenGraph].aliveness == 3){
+				graphHolder.graphs[chosenGraph].show.click();
+			}
+		}
+		else if(e.key == 'Enter') {
+			if(graphHolder.graphs[chosenGraph].aliveness == 1) {
+				graphHolder.graphs[chosenGraph].button.click();
+			}
 		}
 	}
 	graphHolder.updateBorder();
