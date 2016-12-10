@@ -1,4 +1,4 @@
-import jetty;
+import jetty.distribution.cdi.core;
 
 class HelloWorldApp {
     public static void main(String[] args) {
