@@ -19,8 +19,6 @@ var Graph = function() {
 	self.div = document.createElement('div');
 	self.div.id = 'hoverDiv';
 
-	self.button.click();
-
 	self.button.onclick = function() {
 		self.aliveness = 2;
 		self.graphDiv = document.createElement('div');
@@ -239,6 +237,10 @@ var GraphMaster = function() {
 			for(graph = 0; graph < graphHolder.graphs.length; graph++) {
 				graphHolder.graphs[graph].div.style.border = "none";
 			}
+			if(chosenGraph >= graphHolder.graphs.length) {
+				//console.log("Point reached");
+				chosenGraph = graphHolder.graphs.length - 1;
+			}
 			graphHolder.graphs[chosenGraph].div.style.border = "4px solid #000000";
 		}
 	}
@@ -277,11 +279,8 @@ document.body.onkeydown = function(e){
 		//console.log(chosenGraph);
 	}
 	else if(e.key == 'd' || e.key == 'Backspace' || e.key == 'Delete') {
-		if(graphHolder.graphs[chosenGraph].aliveness == 2) {
+		if(graphHolder.graphs[chosenGraph].aliveness == 2 || graphHolder.graphs[chosenGraph].aliveness == 3) {
 			graphHolder.graphs[chosenGraph].delete.click();
-		}
-		else if(graphHolder.graphs[chosenGraph].aliveness == 3) {
-			graphHolder.graphs[chosenGraph].dlte.click();
 		}
 		else if(graphHolder.graphs[chosenGraph].aliveness == 1) {
 			graphHolder.graphs[chosenGraph].button.click();
