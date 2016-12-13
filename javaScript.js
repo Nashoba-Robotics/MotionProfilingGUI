@@ -421,17 +421,22 @@ var Data =  function(inputForm) {
 
 	self.text = document.createElement("input");
 	self.text.type = 'text';
-	self.text.value = 'ws://192.168.1.1';
+	self.text.value = 'ws://localhost:80';
 	self.input.appendChild(self.text);//input text box
 	
 	self.reset = document.createElement('button');
 	self.reset.innerHTML = 'Reset';
 	self.reset.onclick = function() {
-		self.text.value = 'ws://192.168.1.1';
+		self.text.value = 'ws://localhost:80';
 	}
 	self.input.appendChild(self.reset);
 
 	self.submit = document.createElement('button');
+	inputForm.addEventListener("keyup", function(event) {
+	    if (event.keyCode == 13) {
+	        self.submit.click();
+	    }
+	});
 	self.submit.innerHTML = 'Submit';
 	self.submit.onclick = function() {//needed in submit button
 		self.sockets[self.sockets.length] = new WebSocket(self.text.value);
