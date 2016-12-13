@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Motion Profiling GUI</title>
+		<link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="stylesheet.css" rel="stylesheet">
+	</head>
+	<body>
+		<div id="topBar" class="jumbotron text-center">
+			<h1 id="gaveBenProblems">Nashoba Robotics</h1>
+			<p id="subHead">Motion Profiling GUI</p>
+
+			<div id="loadingAnimat">
+				<div class="cssload-container">
+					<div class="cssload-circle-1">
+						<div class="cssload-circle-2">
+							<div class="cssload-circle-3">
+								<div class="cssload-circle-4">
+									<div class="cssload-circle-5">
+										<div class="cssload-circle-6">
+											<div class="cssload-circle-7">
+												<div class="cssload-circle-8">
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--drop down menu-->
+		<nav class="navbar-fixed-top">
+			<div id="hamburgerContainer" class="navbar-header navbar-inverse">
+			 	<span id="hamburger" data-toggle="collapse" data-target="#navBar" class="navbar-brand glyphicon glyphicon-menu-hamburger"></span>
+			</div>
+
+			<ul class="navbar-inverse nav navbar-nav collapse" id="navBar">
+				
+				<!--Dropdown for the Graphs-->
+				<li class="dropdown">
+					<a href="#" id="addGraphButton">Add Graph<span ></span></a>
+					<ul id="graphButtons" class="dropdown-menu dropdown-inverse"></ul>
+				</li>
+
+				<!--Dropdown for the layout-->
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Layout
+					<span class="caret"></span></a>
+					<ul id="layoutButtons" class="dropdown-menu">
+				 		<li><a>
+					 		<input type="range" min="1" max="5" value="2" step="1" onchange="showValue(this.value)" />
+							<span id="range">2</span>
+				 		</a></li>
+					</ul>
+				</li>
+
+				<!--Dropdown for the Input-->
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Input<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a>
+				  			<div id="socketInput"></div>
+			  			</a></li>
+			  			<div onmouseenter="$('#socketDisp').css('display', 'initial');" onmouseleave="$('#socketDisp').css('display', 'none');">
+				  			<li><a>
+				  				<span class="glyphicon glyphicon-chevron-right" style="color:#6F6; width:100%; height:100%;"> Display Socket Info
+			  					</span>
+		  					</a></li>
+		  					<li><a>
+				  				<table id='socketDisp' style="display:none;">
+				  					<thead>
+					  					<tr>
+					  						<th>Socket</th>
+					  						<th>Status</th>
+					  						<th>Actions</th>
+					  					</tr>
+				  					</thead>
+				  					<tbody id="socketDispBod"></tbody>
+				  				</table>
+				  			</a></li>
+			  			</div>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+
+		<div id="graphContainer" class="container-fluid"></div>
+
+		<script src="jquery-3.1.1.min.js"></script>
+		<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+		<script src="plotly-latest.min.js"></script>
+		<script src="javaScript.js"></script>
+
+	</body>
+</html>
