@@ -18,7 +18,29 @@ var Graph = function() {
 	self.button.innerHTML = 'Enter';
 	self.div = document.createElement('div');
 	self.div.id = 'hoverDiv';
-
+/*
+var plotDiv = document.getElementById('plotDiv');
+var t1 = {
+	x: [ new Date().getTime() / 1000 ],
+	y: [0]
+}
+var t2 = {
+	x: [0],
+	y: [ new Date().getTime() / 1000 ]
+}
+var data = [t1, t2];
+Plotly.plot(plotDiv, data, { title: 'Random Over Time'});
+while(1==1){
+	console.log('entered loop');
+	var update = {
+		x: [[ new Date().getTime() / 1000 ]],
+		y: [[ Math.random() ]]
+	};	
+	console.log('bout to plot');
+	Plotly.extendTraces(plotDiv, update, [0], 50);
+	console.log('plotted');
+}
+*/
 	self.button.onclick = function() {
 		self.aliveness = 2;
 		self.graphDiv = document.createElement('div');
@@ -27,10 +49,14 @@ var Graph = function() {
 		self.form.parentNode.removeChild(self.form);
 		//the graph
 		self.traces = [{
-			x:[1, 2, 3],
-			y:[1, 2, 3],
-			mode:'lines'}];
-		self.data = [self.traces[0]];
+			x: [0],
+			y: [0],
+			mode: 'lines'},
+			{
+				x: [1],
+				y: [1],
+				mode: 'lines'
+		}];
 		self.layout = {
 			autosize: false,
 			width: document.getElementById('graphContainer').clientWidth / cols,
@@ -44,7 +70,7 @@ var Graph = function() {
 				pad: 4
  			 }
 		};
-		Plotly.newPlot(self.graphDiv, self.data, self.layout);
+		Plotly.newPlot(self.graphDiv, self.traces, self.layout);
 
 		self.div.appendChild(self.graphDiv);
 		document.getElementById('graphContainer').appendChild(self.div);
@@ -56,7 +82,7 @@ var Graph = function() {
 		function makeModeBut(glyph, toolTip, toAppend) {
 			var glyphSpan = document.createElement('span');
 			var buttA = document.createElement('a');
-			glyphSpan.className = glyph;
+			glyphSpan.className = 'glyphicon glyphicon-' + glyph;
 			buttA.className = 'modebar-btn';
 			buttA.setAttribute('data-title', toolTip);
 			buttA.style.backgroundColor = '#3A3';
@@ -68,10 +94,17 @@ var Graph = function() {
 		self.positionButtons = document.createElement('div');
 		self.positionButtons.className = 'modebar-group';
 
-		self.dlte = makeModeBut('glyphicon glyphicon-trash', 'Delete Graph', self.positionButtons);
-		self.hide = makeModeBut('glyphicon glyphicon-minus-sign', 'Hide Graph', self.positionButtons);
-		self.csv = makeModeBut('glyphicon glyphicon-download-alt', 'Save CSV', self.positionButtons);
-		self.upload = makeModeBut('glyphicon glyphicon-upload', 'Upload Data', self.positionButtons);
+		self.dlte = makeModeBut('trash', 'Delete Graph', self.positionButtons);
+		self.hide = makeModeBut('minus-sign', 'Hide Graph', self.positionButtons);
+		self.csv = makeModeBut('download-alt', 'Save CSV', self.positionButtons);
+		self.upload = makeModeBut('upload', 'Upload Data', self.positionButtons);
+
+		self.addPnt = function() {
+			update = {
+			};
+			Plotly.extendTraces(self.graphDiv, update, [0]/**/, 10);
+			console.log('added x');
+		}
 
 		function searchClass(className, tempDiv) {
 			this.tempArray = tempDiv.children;
@@ -414,7 +447,7 @@ var Data =  function(inputForm) {
 			//console.log(self.sockets + '\n------');
 		}
 		tempSocket.onmessage = function(event) {
-/*working here*/			console.log(event.data);///////////////////////////////////////
+/*working here*/			console.log(event);///////////////////////////////////////
 		}
 		self.reset.click();
 		var tempRow = document.createElement('tr');
@@ -426,6 +459,7 @@ var Data =  function(inputForm) {
 		td1.style.color = '#F00';
 		tempSocket.onopen = function() {
 			td1.style.color = '#0F0';//possible bug point
+			td1.innerHTML = tempSocket.readyState;
 		}
 		tempRow.appendChild(td1);
 		var td2 = document.createElement('td');
