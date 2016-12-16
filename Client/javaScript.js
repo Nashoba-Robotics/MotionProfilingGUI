@@ -18,6 +18,10 @@ var Graph = function() {
 	self.button.innerHTML = 'Enter';
 	self.div = document.createElement('div');
 	self.div.id = 'hoverDiv';
+	self.traces = [{
+		x: [],
+		y: [],
+		mode: 'lines'}];
 /*
 var plotDiv = document.getElementById('plotDiv');
 var t1 = {
@@ -47,16 +51,6 @@ while(1==1){
 		//self.div.style.border = "4px solid #000000";
 		self.graphName = self.input.value;
 		self.form.parentNode.removeChild(self.form);
-		//the graph
-		self.traces = [{
-			x: [0],
-			y: [0],
-			mode: 'lines'},
-			{
-				x: [1],
-				y: [1],
-				mode: 'lines'
-		}];
 		self.layout = {
 			autosize: false,
 			width: document.getElementById('graphContainer').clientWidth / cols,
@@ -333,11 +327,11 @@ function loadTrace(xml, graph) {
 	var t;
 	for(t = 0; t < trace.length; t++) {
 		graph.traces.push({x:[], y:[], mode:'lines'})
-		var point = trace[t].getElementsByTagName("X");
+		var point = trace[t].getElementsByTagName("POINT");
 		var p;
 		for(p = 0; p < point.length; p++) {
-			graph.traces[t].x.push(parseInt(traces[t].getElementsByTagName("X")[p].childNodes[0].nodeValue));
-			graph.traces[t].y.push(parseInt(traces[t].getElementsByTagName("Y")[p].childNodes[0].nodeValue));	
+			graph.traces[t].x.push(parseInt(point[p].getElementsByTagName("X")[0].childNodes[0].nodeValue));
+			graph.traces[t].y.push(parseInt(point[p].getElementsByTagName("Y")[0].childNodes[0].nodeValue));	
 		}
 	}
 	graphHolder.updateSize(document.getElementById('graphContainer').clientWidth / cols, (document.getElementById('graphContainer').clientWidth / cols) / 1.5);
