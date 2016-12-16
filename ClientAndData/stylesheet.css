@@ -1,0 +1,228 @@
+body {
+    background-color: white;
+}
+
+li a {
+    display: block;
+    color: #176817;
+    border-left: 3px solid #176817;
+    border-bottom: 3px solid #176817;
+    border-right: 3px solid #176817;
+    border-top: 3px solid #176817;
+    background-color: black;
+    text-align: left;
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+}
+
+#subHead {
+    color: #176817;
+    font-style: italic;
+    font-size: 50px;
+    font-family: impact;
+    text-shadow: 10px 10px #0A2A0A;
+}
+
+#hamburgerContainer {
+    background-color: black;
+    border-bottom: 3px solid #176817;
+}
+
+/*Hamburger css*/
+#hamburger {
+    color: #176817;
+}
+
+#gaveBenProblems {
+    font-size: 100px;
+    font-style: italic;
+    font-family: impact;
+    color: #176817;
+    text-shadow: 10px 10px #0A2A0A;
+}
+
+#TopRow {
+    height: 300px;
+}
+
+#topBar {
+    background-color: black;
+}
+
+#graphContainer {
+    position: relative;
+}
+
+#graphButtons {
+    background-color: black;
+}
+
+#graphButtons li a{
+    color: #176817;
+}
+
+#layoutButtons {
+    background-color: black;
+}
+
+#layoutButtons li a{
+    color: #176817;
+    font-size: 20px;
+}
+
+#inputButtons {
+    background-color: black;
+}
+
+#inputButtons li a{
+    color: #176817;
+}
+
+/*
+These are the random loading symbols still
+*/
+.cssload-container {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.cssload-circle-1 {
+    height: 1000px;
+    width: 1000px;
+    background: rgb(255, 255, 255);
+}
+
+.cssload-circle-2 {
+    height: 700px;
+    width: 700px;
+    background: rgb(0, 0, 0);
+}
+
+.cssload-circle-3 {
+    height: 550px;
+    width: 550px;
+    background: rgb(255, 255, 255);
+}
+
+.cssload-circle-4 {
+    height: 450px;
+    width: 450px;
+    background: rgb(0, 0, 0);
+}
+
+.cssload-circle-5 {
+    height: 375px;
+    width: 375px;
+    background: rgb(255,255,255);
+}
+
+.cssload-circle-6 {
+    height: 300px;
+    width: 300px;
+    background: rgb(0,0,0);
+}
+
+.cssload-circle-7 {
+    height: 250px;
+    width: 250px;
+    background: rgb(255,255,255);
+}
+
+.cssload-circle-8 {
+    height: 200px;
+    width: 200px;
+    background: rgb(0,0,0);
+}
+
+#loadingAnimat {
+    display: none;
+}
+
+.cssload-circle-1,
+.cssload-circle-2,
+.cssload-circle-3,
+.cssload-circle-4,
+.cssload-circle-5,
+.cssload-circle-6,
+.cssload-circle-7,
+.cssload-circle-8 {
+    border-bottom: none;
+    border-radius: 50%;
+        -o-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+    box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+        -o-box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+        -ms-box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+        -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+        -moz-box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+    animation-name: cssload-spin;
+        -o-animation-name: cssload-spin;
+        -ms-animation-name: cssload-spin;
+        -webkit-animation-name: cssload-spin;
+        -moz-animation-name: cssload-spin;
+    animation-duration: 4600ms;
+        -o-animation-duration: 4600ms;
+        -ms-animation-duration: 4600ms;
+        -webkit-animation-duration: 4600ms;
+        -moz-animation-duration: 4600ms;
+    animation-iteration-count: infinite;
+        -o-animation-iteration-count: infinite;
+        -ms-animation-iteration-count: infinite;
+        -webkit-animation-iteration-count: infinite;
+        -moz-animation-iteration-count: infinite;
+    animation-timing-function: linear;
+        -o-animation-timing-function: linear;
+        -ms-animation-timing-function: linear;
+        -webkit-animation-timing-function: linear;
+        -moz-animation-timing-function: linear;
+}
+
+
+
+@keyframes cssload-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@-o-keyframes cssload-spin {
+    from {
+        -o-transform: rotate(0deg);
+    }
+    to {
+        -o-transform: rotate(360deg);
+    }
+}
+
+@-ms-keyframes cssload-spin {
+    from {
+        -ms-transform: rotate(0deg);
+    }
+    to {
+        -ms-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes cssload-spin {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-moz-keyframes cssload-spin {
+    from {
+        -moz-transform: rotate(0deg);
+    }
+    to {
+        -moz-transform: rotate(360deg);
+    }
+}
