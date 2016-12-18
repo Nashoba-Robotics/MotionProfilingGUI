@@ -1,11 +1,16 @@
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
+import java.net.UnknownHostException;
+import java.util.concurrent.TimeUnit;
 
 public class MainFunct {
 
-	public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
-		Server mainServer = new Server();
-		mainServer.startListening(0);//0 for any available port
+	public static void main(String[] args) throws UnknownHostException, InterruptedException {
+		Server server = new Server();
+		server.startServer();
+		String data = "hello world";
+		while(true) {
+			System.out.println("sending:" + data);
+			server.sendAll(data);
+			TimeUnit.SECONDS.sleep(1);//send message every second
+		}
 	}
-
 }

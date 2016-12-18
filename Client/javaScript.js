@@ -421,7 +421,7 @@ var Data =  function(inputForm) {
 
 	self.text = document.createElement("input");
 	self.text.type = 'text';
-	self.text.value = 'ws://localhost:80';
+	self.text.value = 'ws://localhost/MPGUI:1768';
 	self.input.appendChild(self.text);//input text box
 	
 	self.reset = document.createElement('button');
@@ -441,19 +441,6 @@ var Data =  function(inputForm) {
 	self.submit.onclick = function() {//needed in submit button
 		self.sockets[self.sockets.length] = new WebSocket(self.text.value);
 		var tempSocket = self.sockets[self.sockets.length-1];
-		tempSocket.onerror = function(error) {
-			alert(error + "\ncouldn't connect to: " + tempSocket.url);
-			//console.log(self.sockets);
-
-		}
-		tempSocket.onclose = function() {
-			//self.sockets.splice(self.sockets.indexOf(tempSocket), 1);
-			//alert('Socket closed');
-			//console.log(self.sockets + '\n------');
-		}
-		tempSocket.onmessage = function(event) {
-/*working here*/			console.log(event);///////////////////////////////////////
-		}
 		self.reset.click();
 		var tempRow = document.createElement('tr');
 		var td0 = document.createElement('td');
@@ -465,6 +452,23 @@ var Data =  function(inputForm) {
 		tempSocket.onopen = function() {
 			td1.style.color = '#0F0';//possible bug point
 			td1.innerHTML = tempSocket.readyState;
+		}
+		tempSocket.onerror = function(error) {
+			alert(error + "\ncouldn't connect to: " + tempSocket.url);
+			//console.log(self.sockets);
+			td1.style.color = '#F00';
+			td1.innerHTML = tempSocket.readyState;
+		}
+		tempSocket.onclose = function() {
+			//self.sockets.splice(self.sockets.indexOf(tempSocket), 1);
+			//alert('Socket closed');
+			//console.log(self.sockets + '\n------');
+			td1.style.color = '#F00';
+			td1.innerHTML = tempSocket.readyState;
+		}
+		tempSocket.onmessage = function(event) {
+			console.log(event);
+			console.log('message recieved');
 		}
 		tempRow.appendChild(td1);
 		var td2 = document.createElement('td');
