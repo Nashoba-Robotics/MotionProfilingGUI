@@ -9,13 +9,17 @@ $(document).keyup(function(e) {
 });
 
 var Graph = function() {
-	this.aliveness = 1;//for delete function
+	this.aliveness = .1;//for keyboard shortcuts
 
 	//Button to name graph
 	var self = this;
-	self.input = document.createElement('input');
-	self.button = document.createElement('button');
-	self.button.innerHTML = 'Enter';
+	self.graphName = "";
+	self.xaxis = "";
+	self.yaxis = "";
+	self.nameinput = document.createElement('input');
+	self.nameinput.placeholder = 'Graph Name';
+	self.name = document.createElement('button');
+	self.name.innerHTML = 'Enter';
 	self.div = document.createElement('div');
 	self.div.id = 'hoverDiv';
 	self.traces = [{
@@ -45,12 +49,50 @@ while(1==1){
 	console.log('plotted');
 }
 */
-	self.button.onclick = function() {
-		self.aliveness = 2;
+	self.name.onclick = function() {
+		self.aliveness = 0.2;//For keyboard shortcut
+		self.graphName = self.nameinput.value;
+		console.log(self.graphName);
+		self.form.removeChild(self.name);
+		self.form.removeChild(self.nameinput);
+		self.xaxinput = document.createElement('input');
+		self.xaxinput.placeholder = 'X-Axis Name';
+		self.xax = document.createElement('button');
+		self.xax.innerHTML = 'Enter';
+		self.form.appendChild(self.xaxinput);
+		self.form.appendChild(self.xax);
+
+		self.xax.onclick = function() {
+			self.aliveness = 0.3//For keyboard shortcut
+			self.xaxis = self.xaxinput.value;
+			self.form.removeChild(self.xax);
+			self.form.removeChild(self.xaxinput);
+			self.yaxinput = document.createElement('input');
+			self.yaxinput.placeholder = 'Y-Axis Name';
+			self.yax = document.createElement('button');
+			self.yax.innerHTML = 'Enter';
+			self.form.appendChild(self.yaxinput);
+			self.form.appendChild(self.yax);
+
+			self.yax.onclick = function() {
+				self.yaxis = self.yaxinput.value;
+				self.form.removeChild(self.yax);
+				self.form.removeChild(self.yaxinput);
+				createGraph();
+			}
+		}
+	}
+
+	self.form = document.createElement('div');
+	self.form.appendChild(self.nameinput);
+	self.form.appendChild(self.name);
+	self.div.appendChild(self.form);
+	document.getElementById('graphContainer').appendChild(self.div);
+
+	function createGraph() {
+ 		self.aliveness = 2;
 		self.graphDiv = document.createElement('div');
 		//self.div.style.border = "4px solid #000000";
-		self.graphName = self.input.value;
-		self.form.parentNode.removeChild(self.form);
 		self.layout = {
 			autosize: false,
 			width: document.getElementById('graphContainer').clientWidth / cols,
@@ -62,7 +104,23 @@ while(1==1){
 				b: 25,
    				t: 25,
 				pad: 4
- 			 }
+ 			},
+			xaxis: {
+				title: self.xaxis,
+				titlefont: {
+      				family: 'Arial, sans-serif',
+      				size: 18,
+      				color: '#000000'
+      			}
+			},
+			yaxis: {
+				title: self.yaxis,
+				titlefont: {
+      				family: 'Arial, sans-serif',
+      				size: 18,
+      				color: '#000000'
+				}
+			}
 		};
 		Plotly.newPlot(self.graphDiv, self.traces, self.layout);
 
@@ -79,7 +137,7 @@ while(1==1){
 			glyphSpan.className = 'glyphicon glyphicon-' + glyph;
 			buttA.className = 'modebar-btn';
 			buttA.setAttribute('data-title', toolTip);
-			buttA.style.backgroundColor = '#3A3';
+			//buttA.style.backgroundColor = '#000000';
 			buttA.appendChild(glyphSpan);
 			toAppend.appendChild(buttA);
 			return buttA;			
@@ -177,12 +235,6 @@ while(1==1){
 
 		graphHolder.updateSize(document.getElementById('graphContainer').clientWidth / cols, (document.getElementById('graphContainer').clientWidth / cols) / 1.5);
 	}
-
-	self.form = document.createElement('div');
-	self.form.appendChild(self.input);
-	self.form.appendChild(self.button);
-	self.div.appendChild(self.form);
-	document.getElementById('graphContainer').appendChild(self.div);
 
 	function isHover(e) {
   		return (e.parentElement.querySelector(':hover') === e);
@@ -286,10 +338,6 @@ document.body.onkeydown = function(e){
 			if(graphHolder.graphs[chosenGraph].aliveness == 2 || graphHolder.graphs[chosenGraph].aliveness == 3) {
 				graphHolder.graphs[chosenGraph].delete.click();
 			}
-			else if(graphHolder.graphs[chosenGraph].aliveness == 1) {
-				graphHolder.graphs[chosenGraph].button.click();
-				graphHolder.graphs[chosenGraph].delete.click();
-			}
 		}
 		else if (e.key == 'h'){
 			if(graphHolder.graphs[chosenGraph].aliveness == 2) {
@@ -302,8 +350,14 @@ document.body.onkeydown = function(e){
 			}
 		}
 		else if(e.key == 'Enter') {
-			if(graphHolder.graphs[chosenGraph].aliveness == 1) {
-				graphHolder.graphs[chosenGraph].button.click();
+			if(graphHolder.graphs[chosenGraph].aliveness == .1) {
+				graphHolder.graphs[chosenGraph].name.click();
+			}
+			else if(graphHolder.graphs[chosenGraph].aliveness == .2) {
+				graphHolder.graphs[chosenGraph].xax.click();
+			}
+			else if(graphHolder.graphs[chosenGraph].aliveness == .3) {
+				graphHolder.graphs[chosenGraph].yax.click();
 			}
 		}
 	}
@@ -415,7 +469,7 @@ var Data =  function(inputForm) {
 
 	self.text = document.createElement("input");
 	self.text.type = 'text';
-	self.text.value = 'ws://localhost/MPGUI:1768';
+	self.text.value = 'ws://localhost:80';
 	self.input.appendChild(self.text);//input text box
 	
 	self.reset = document.createElement('button');
@@ -435,6 +489,19 @@ var Data =  function(inputForm) {
 	self.submit.onclick = function() {//needed in submit button
 		self.sockets[self.sockets.length] = new WebSocket(self.text.value);
 		var tempSocket = self.sockets[self.sockets.length-1];
+		tempSocket.onerror = function(error) {
+			alert(error + "\ncouldn't connect to: " + tempSocket.url);
+			//console.log(self.sockets);
+
+		}
+		tempSocket.onclose = function() {
+			//self.sockets.splice(self.sockets.indexOf(tempSocket), 1);
+			//alert('Socket closed');
+			//console.log(self.sockets + '\n------');
+		}
+		tempSocket.onmessage = function(event) {
+/*working here*/			console.log(event);///////////////////////////////////////
+		}
 		self.reset.click();
 		var tempRow = document.createElement('tr');
 		var td0 = document.createElement('td');
@@ -446,23 +513,6 @@ var Data =  function(inputForm) {
 		tempSocket.onopen = function() {
 			td1.style.color = '#0F0';//possible bug point
 			td1.innerHTML = tempSocket.readyState;
-		}
-		tempSocket.onerror = function(error) {
-			alert(error + "\ncouldn't connect to: " + tempSocket.url);
-			//console.log(self.sockets);
-			td1.style.color = '#F00';
-			td1.innerHTML = tempSocket.readyState;
-		}
-		tempSocket.onclose = function() {
-			//self.sockets.splice(self.sockets.indexOf(tempSocket), 1);
-			//alert('Socket closed');
-			//console.log(self.sockets + '\n------');
-			td1.style.color = '#F00';
-			td1.innerHTML = tempSocket.readyState;
-		}
-		tempSocket.onmessage = function(event) {
-			console.log(event);
-			console.log('message recieved');
 		}
 		tempRow.appendChild(td1);
 		var td2 = document.createElement('td');
