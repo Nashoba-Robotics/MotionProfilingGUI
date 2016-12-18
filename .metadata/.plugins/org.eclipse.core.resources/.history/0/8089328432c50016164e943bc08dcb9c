@@ -1,0 +1,9 @@
+import java.net.UnknownHostException;
+
+public class MainFunct {
+
+	public static void main(String[] args) throws UnknownHostException {
+		Main server = new Main();
+		server.startServer();
+	}
+}

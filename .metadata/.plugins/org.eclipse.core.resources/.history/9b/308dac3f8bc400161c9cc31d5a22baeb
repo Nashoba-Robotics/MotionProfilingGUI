@@ -1,0 +1,24 @@
+import java.io.IOException;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Server {
+	public List<Socket> connections = new ArrayList<Socket>();
+    
+	public int getLength() {
+		return connections.size();
+	}
+	
+	public void startListening(int port) {//port=0 for any that is available
+		ClientListner listner = new ClientListner(connections, port);
+		listner.start();
+	}
+	
+	public void sendThings(String data) throws IOException {
+		byte dataUTF8[] = (data + "\r\n\r\n").getBytes("UTF-8");
+		for(int i = 0; i < connections.size(); i++) {
+			connections.get(i).getOutputStream().write(dataUTF8);
+		}
+	}
+}

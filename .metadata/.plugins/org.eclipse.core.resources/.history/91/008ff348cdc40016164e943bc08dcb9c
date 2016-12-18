@@ -1,0 +1,25 @@
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Scanner;
+
+public class MainFunct {
+
+	public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
+		Server mainServer = new Server();
+		mainServer.startListening(0);//0 for any available port
+		System.in.read();
+		String data = "abc abc abc";
+		int i = 0;
+		while(true) {
+			System.out.print(mainServer.getLength());
+			if(i%160 == 0) System.out.print('\n');
+			if(mainServer.getLength() > 0) {
+				System.out.println("sending data");
+				mainServer.sendThings(data);
+				System.out.println(data + ":sent");
+			}
+			i++;
+		}
+	}
+
+}

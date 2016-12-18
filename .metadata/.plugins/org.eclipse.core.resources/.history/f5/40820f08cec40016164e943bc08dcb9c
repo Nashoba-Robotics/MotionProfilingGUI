@@ -1,0 +1,12 @@
+/*import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Scanner;
+*/
+public class MainFunct {
+
+	public static void main(String[] args) {
+		Main server = new Main();
+		server.startServer();
+		System.out.println(server.getAddress());
+	}
+}

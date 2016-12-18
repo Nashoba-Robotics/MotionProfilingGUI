@@ -1,0 +1,13 @@
+import java.net.UnknownHostException;
+
+public class MainFunct {
+
+	public static void main(String[] args) throws UnknownHostException {
+		Main server = new Main();
+		server.startServer();
+		String data = "hello world";
+		while(true) {
+			server.sendAll(data);
+		}
+	}
+}

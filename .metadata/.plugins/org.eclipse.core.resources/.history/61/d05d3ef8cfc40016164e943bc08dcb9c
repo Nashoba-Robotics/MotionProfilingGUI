@@ -1,0 +1,8 @@
+public class MainFunct {
+
+	public static void main(String[] args) {
+		Main server = new Main();
+		server.startServer();
+		System.out.println(server.getAddress());
+	}
+}
