@@ -28,10 +28,21 @@ public class Server extends WebSocketServer{
 	public void sendAll(String data) {
 		if(connections.size() > 0) {
 			for(int i = 0; i < connections.size(); i++) {
-				System.out.println(i + '-' + connections.size());
+				//System.out.println(i + '-' + connections.size());
 				connections.get(i).send(data);
 			}
 		}
+	}
+	
+	public void sendInPnt(String inputName, int val, int time) {
+		//send a point that will be parsed by javascript client
+		String data = "{"
+				+ "\"proto\":\"singlPnt\","
+				+ "\"input\":\"" + inputName
+				+ "\",\"value\":" + val
+				+ ",\"time\":" + time
+				+ "}";
+		sendAll(data);
 	}
 	
 	@Override

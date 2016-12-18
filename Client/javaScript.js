@@ -412,6 +412,54 @@ var Data =  function(inputForm) {
 	self.input = inputForm;
 	self.sockets = [];
 	self.infoTableBod = document.getElementById('socketDispBod');//localize calls to classes outside of functions scope maybe?
+	self.inputHashArr = [];//contains all data
+
+	self.timeVal = function(val, time) {//constructor(int, int)
+		//struct with time and value
+		this.val = val;
+		this.time = time;
+	}
+	self.inputHash = function(name) {//constructor(string)
+		//a trace with name 'name'(alwys a string) and data[timeVal, timeval...]
+		this.name = name;
+		this.data = [];
+	}
+	/*
+	inputHashArr[
+	---------------
+	|[i]--------------//inputHash
+		|.name--------//string
+		|.data[]--------//timeval array
+			|.val-----//int
+			|.time----//int
+	---------------
+	]
+	*/
+	self.searchInputName = function(testName) {//(string)
+	//searches inputHashArray for existing trace with name of 'name'
+		if(typeof testName == "string") {
+			for(var i = 0; i < self.inputHashArr.length; i++) {
+				if(self.inputHashArr[i].name == testName) {
+					return i;
+				}
+			}
+		}
+		return -1;//not found
+	}
+	self.feedDataPnt = function(name, val, time) {//(string, int, int)
+		//feeds trace with name of 'name' data points val and time
+		//-->if trace wit name of 'name', makes new one
+		var i = searchInputName(name);
+		if(i == -1) {//if trace dows not exist=>make one
+			i = self.inputHashArr.push(new self.inputHash(name));
+		}
+		//no else if because data still needs to add
+		if(typeof val == "number" && typeof time == "number") {//validate data
+			return self.inputHashArr[i].data.push(new self.timeVal(val, time));//return index appended to
+		}else {
+			return -1;
+		}
+	}
 
 	self.text = document.createElement("input");
 	self.text.type = 'text';
@@ -421,7 +469,7 @@ var Data =  function(inputForm) {
 	self.reset = document.createElement('button');
 	self.reset.innerHTML = 'Reset';
 	self.reset.onclick = function() {
-		self.text.value = 'ws://localhost:80';
+		self.text.value = 'ws://localhost/MPGUI:1768';
 	}
 	self.input.appendChild(self.reset);
 
@@ -461,8 +509,9 @@ var Data =  function(inputForm) {
 			td1.innerHTML = tempSocket.readyState;
 		}
 		tempSocket.onmessage = function(event) {
-			console.log(event);
-			console.log('message recieved');
+			console.log('message recieved--data>');
+			obj = JSON.parse(event.data);
+			console.log(obj);//event.data);
 		}
 		tempRow.appendChild(td1);
 		var td2 = document.createElement('td');
