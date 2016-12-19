@@ -449,13 +449,27 @@ var Data =  function(inputForm) {
 	self.feedDataPnt = function(name, val, time) {//(string, int, int)
 		//feeds trace with name of 'name' data points val and time
 		//-->if trace wit name of 'name', makes new one
-		var i = searchInputName(name);
+		var i = self.searchInputName(name);
 		if(i == -1) {//if trace dows not exist=>make one
-			i = self.inputHashArr.push(new self.inputHash(name));
+			i = self.inputHashArr.push(new self.inputHash(name)) - 1;//push method return size
 		}
 		//no else if because data still needs to add
 		if(typeof val == "number" && typeof time == "number") {//validate data
 			return self.inputHashArr[i].data.push(new self.timeVal(val, time));//return index appended to
+		}else {
+			return -1;
+		}
+	}
+	self.feedDataArr = function(name, val, time) {
+		if(val.constructor === Array && time.constructor === Array) {//check if val and time are array
+			if(val.length == time.length) {//validate point array lengths
+				for(var i = 0; i < val.length; i++) {
+					feedDataPnt(name, val[i], time[i]);
+				}
+				return val.length;//return number of vals written
+			}else {
+				return -1;
+			}
 		}else {
 			return -1;
 		}
@@ -509,9 +523,26 @@ var Data =  function(inputForm) {
 			td1.innerHTML = tempSocket.readyState;
 		}
 		tempSocket.onmessage = function(event) {
-			console.log('message recieved--data>');
-			obj = JSON.parse(event.data);
-			console.log(obj);//event.data);
+			//console.log('message recieved--data>');
+			try{
+				var obj = JSON.parse(event.data);
+				try{
+					if(obj.proto == "singlPnt") {
+						if(self.feedDataPnt(obj.input, obj.value, obj.time) !== -1) {
+							console.log('pnt logged successfully');
+						}else {
+							console.log('failed to log pnt');
+						}
+						//field types not checked here because they are checked later down the line of functs
+					}else {
+						console.log('proto not supported:' + obj.proto);
+					}
+				}catch(e) {
+					console.log('certain fields not found in message:' + obj + '\n\tmessage:' + event.data);
+				}
+			}catch(e) {
+				console.log('invalid message:' + event.data)
+			}
 		}
 		tempRow.appendChild(td1);
 		var td2 = document.createElement('td');
